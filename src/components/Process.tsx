@@ -1,9 +1,10 @@
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useRef } from "react";
-import { steps } from "../data/content";
+import { useLang } from "../i18n";
 import { SectionTitle, ease } from "./Shared";
 
 export function Process() {
+  const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 85%", "end 55%"] });
   const scale = useSpring(scrollYProgress, { stiffness: 100, damping: 25 });
@@ -11,22 +12,15 @@ export function Process() {
   return (
     <section className="section process-section">
       <div className="container">
-        <SectionTitle
-          eyebrow="Cómo trabajamos"
-          title={
-            <>
-              Simple, rápido y <span className="hl">sin vueltas</span>
-            </>
-          }
-        />
+        <SectionTitle eyebrow={t.process.eyebrow} title={t.process.title} />
         <div className="steps" ref={ref}>
           <div className="steps-line">
             <motion.span style={{ scaleX: scale }} className="steps-line-h" />
             <motion.span style={{ scaleY: scale }} className="steps-line-v" />
           </div>
-          {steps.map((s, i) => (
+          {t.process.steps.map((s, i) => (
             <motion.div
-              key={s.title}
+              key={i}
               className="step"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}

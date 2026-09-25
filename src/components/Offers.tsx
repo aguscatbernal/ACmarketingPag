@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Check, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
-import { offers, promo, waLink } from "../data/content";
+import { offers, promoActive, waLink } from "../data/site";
+import { useLang } from "../i18n";
 import { Reveal, SectionTitle, ease } from "./Shared";
 
 function useEndOfMonthCountdown() {
@@ -36,82 +37,84 @@ function Unit({ v, label }: { v: number; label: string }) {
 }
 
 export function Offers() {
-  const t = useEndOfMonthCountdown();
+  const { t, money } = useLang();
+  const o = t.offers;
+  const cd = useEndOfMonthCountdown();
 
   return (
     <section className="section offers-section" id="ofertas">
       <div className="container">
-        <SectionTitle
-          eyebrow="Ofertas"
-          title={
-            <>
-              Packs pensados para <span className="hl">arrancar ya</span>
-            </>
-          }
-          subtitle="Elegí uno o armamos uno a tu medida. Todos los precios se pueden adaptar."
-        />
+        <SectionTitle eyebrow={o.eyebrow} title={o.title} subtitle={o.subtitle} />
 
-        {promo.active && (
+        {promoActive && (
           <Reveal className="promo-banner">
             <div className="promo-shine" />
             <div className="promo-text">
               <span className="promo-tag">
-                <Sparkles size={16} /> {promo.title}
+                <Sparkles size={16} /> {o.promoTitle}
               </span>
-              <strong>{promo.text}</strong>
+              <strong>{o.promoText}</strong>
             </div>
             <div className="countdown">
-              <Unit v={t.d} label="días" />
-              <Unit v={t.h} label="hs" />
-              <Unit v={t.m} label="min" />
-              <Unit v={t.s} label="seg" />
+              <Unit v={cd.d} label={o.days} />
+              <Unit v={cd.h} label={o.hours} />
+              <Unit v={cd.m} label={o.mins} />
+              <Unit v={cd.s} label={o.secs} />
             </div>
           </Reveal>
         )}
 
         <div className="offers-grid">
-          {offers.map((o, i) => (
-            <motion.div
-              key={o.id}
-              className={`offer-card${o.highlight ? " highlight" : ""}`}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: (i % 3) * 0.1, ease }}
-              whileHover={{ y: -8 }}
-            >
-              {o.highlight && <div className="offer-glow" />}
-              <div className="offer-inner">
-                {o.badge && <span className="offer-badge">🔥 {o.badge}</span>}
-                <motion.span className="offer-emoji" whileHover={{ rotate: [0, -15, 15, 0], scale: 1.2 }}>
-                  {o.emoji}
-                </motion.span>
-                <h3>{o.name}</h3>
-                <p className="offer-desc">{o.desc}</p>
-                <div className="offer-price">
-                  {o.oldPrice && <s>{o.oldPrice}</s>}
-                  <strong>{o.price}</strong>
-                  <small>{o.period}</small>
+          {offers.map((offer, i) => {
+            const copy = o.items[offer.id];
+            return (
+              <motion.div
+                key={offer.id}
+                className={`offer-card${offer.highlight ? " highlight" : ""}`}
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.6, delay: (i % 3) * 0.1, ease }}
+                whileHover={{ y: -8 }}
+              >
+                {offer.highlight && <div className="offer-glow" />}
+                <div className="offer-inner">
+                  {copy.badge && <span className="offer-badge">🔥 {copy.badge}</span>}
+                  <motion.span className="offer-emoji" whileHover={{ rotate: [0, -15, 15, 0], scale: 1.2 }}>
+                    {offer.emoji}
+                  </motion.span>
+                  <h3>{copy.name}</h3>
+                  <p className="offer-desc">{copy.desc}</p>
+                  <div className="offer-price">
+                    {offer.oldPrice && <s>{money(offer.oldPrice)}</s>}
+                    <strong>
+                      {offer.from && <span className="offer-from">{o.from} </span>}
+                      {money(offer.price)}
+                    </strong>
+                    <small>{copy.period}</small>
+                  </div>
+                  <ul>
+                    {copy.features.map((f) => (
+                      <li key={f}>
+                        <Check size={16} /> {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    className={`btn ${offer.highlight ? "btn-primary" : "btn-outline"} btn-block`}
+                    href={waLink(`${o.waMsg} ${copy.name} ${offer.emoji}`)}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {o.want}
+                  </a>
                 </div>
-                <ul>
-                  {o.features.map((f) => (
-                    <li key={f}>
-                      <Check size={16} /> {f}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  className={`btn ${o.highlight ? "btn-primary" : "btn-outline"} btn-block`}
-                  href={waLink(`¡Hola! Me interesa el ${o.name} ${o.emoji}`)}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Lo quiero
-                </a>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
+
+        <p className="offers-note">{o.note}</p>
       </div>
     </section>
   );

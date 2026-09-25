@@ -8,7 +8,8 @@ import {
 } from "framer-motion";
 import { ArrowRight, Heart, Star, CheckCircle2, Play } from "lucide-react";
 import { useEffect, useState, type MouseEvent } from "react";
-import { heroStats, heroWords, waLink } from "../data/content";
+import { brand, heroStats, waLink } from "../data/site";
+import { useLang } from "../i18n";
 import { Counter, NfcWaves, WhatsAppIcon, ease } from "./Shared";
 
 function useParallax(v: MotionValue<number>, amount: number) {
@@ -16,18 +17,21 @@ function useParallax(v: MotionValue<number>, amount: number) {
 }
 
 export function Hero() {
+  const { t } = useLang();
+  const heroWords = t.hero.words;
   const [i, setI] = useState(0);
   const [likes, setLikes] = useState(1284);
 
   useEffect(() => {
-    const t = setInterval(() => setI((v) => (v + 1) % heroWords.length), 2200);
+    const w = setInterval(() => setI((v) => v + 1), 2200);
     const l = setInterval(() => setLikes((v) => v + Math.ceil(Math.random() * 9)), 900);
     return () => {
-      clearInterval(t);
+      clearInterval(w);
       clearInterval(l);
     };
   }, []);
 
+  const word = heroWords[i % heroWords.length];
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const sx = useSpring(mx, { stiffness: 60, damping: 18 });
@@ -62,7 +66,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6, ease }}
           >
-            <span className="pill-dot" /> Marketing que se toca ✨
+            <span className="pill-dot" /> {t.hero.pill}
           </motion.span>
 
           <motion.h1
@@ -70,22 +74,22 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease }}
           >
-            Hacé que tu
+            {t.hero.before}
             <span className="rotator">
               <AnimatePresence mode="wait">
                 <motion.span
-                  key={heroWords[i]}
+                  key={word}
                   className="rotator-word"
                   initial={{ y: "100%", opacity: 0, rotateX: -80 }}
                   animate={{ y: 0, opacity: 1, rotateX: 0 }}
                   exit={{ y: "-100%", opacity: 0, rotateX: 80 }}
                   transition={{ duration: 0.45, ease }}
                 >
-                  {heroWords[i]}
+                  {word}
                 </motion.span>
               </AnimatePresence>
             </span>
-            sea el que todos recomiendan
+            {t.hero.after}
           </motion.h1>
 
           <motion.p
@@ -94,8 +98,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8, ease }}
           >
-            Tags NFC para reseñas de Google y carta en mesa, colaboraciones en Instagram y TikTok, y apps
-            para manejar tu restaurante. Todo en un mismo lugar.
+            {t.hero.sub}
           </motion.p>
 
           <motion.div
@@ -105,15 +108,15 @@ export function Hero() {
             transition={{ delay: 0.65, duration: 0.8, ease }}
           >
             <a href="#ofertas" className="btn btn-primary">
-              Ver ofertas <ArrowRight size={18} />
+              {t.hero.ctaOffers} <ArrowRight size={18} />
             </a>
             <a
-              href={waLink("¡Hola! Quiero saber más sobre sus servicios 🙌")}
+              href={waLink(t.hero.waMsg)}
               target="_blank"
               rel="noreferrer"
               className="btn btn-ghost"
             >
-              <WhatsAppIcon size={18} /> Escribinos
+              <WhatsAppIcon size={18} /> {t.hero.ctaWa}
             </a>
           </motion.div>
 
@@ -124,11 +127,11 @@ export function Hero() {
             transition={{ delay: 0.9, duration: 0.8 }}
           >
             {heroStats.map((s) => (
-              <div key={s.label} className="hero-stat">
+              <div key={s.key} className="hero-stat">
                 <strong>
                   <Counter to={s.value} prefix={s.prefix} suffix={s.suffix} />
                 </strong>
-                <span>{s.label}</span>
+                <span>{t.hero.stats[s.key]}</span>
               </div>
             ))}
           </motion.div>
@@ -146,8 +149,8 @@ export function Hero() {
             <div className="phone-screen reel-screen">
               <div className="reel-top">
                 <span className="reel-avatar">C</span>
-                <span>celesslarocca</span>
-                <span className="reel-follow">Seguir</span>
+                <span>{brand.creatorInstagramHandle.slice(1)}</span>
+                <span className="reel-follow">{t.hero.follow}</span>
               </div>
               <motion.div
                 className="reel-emoji"
@@ -167,11 +170,11 @@ export function Hero() {
                 >
                   <Heart size={22} fill="#ff4d6d" color="#ff4d6d" />
                 </motion.div>
-                <small>{likes.toLocaleString("es-AR")}</small>
+                <small>{likes.toLocaleString("es-ES")}</small>
               </div>
               <div className="reel-caption">
-                <strong>La burger más grande de la ciudad 🤯</strong>
-                <span>#colab #gastronomia</span>
+                <strong>{t.hero.reelCaption}</strong>
+                <span>{t.hero.reelTags}</span>
               </div>
               <div className="reel-progress">
                 <motion.span
@@ -202,8 +205,8 @@ export function Hero() {
                   </motion.span>
                 ))}
               </div>
-              <strong>4.9 en Google</strong>
-              <small>+86 reseñas este mes</small>
+              <strong>{t.hero.cardReviewTitle}</strong>
+              <small>{t.hero.cardReviewSub}</small>
             </div>
           </motion.div>
 
@@ -219,8 +222,8 @@ export function Hero() {
                 <NfcWaves />
               </span>
               <div>
-                <strong>Tap NFC</strong>
-                <small>Carta abierta en 1 seg</small>
+                <strong>{t.hero.cardNfcTitle}</strong>
+                <small>{t.hero.cardNfcSub}</small>
               </div>
             </div>
           </motion.div>
@@ -235,15 +238,15 @@ export function Hero() {
             <div className="bob bob-3">
               <CheckCircle2 size={22} color="#0f9d84" />
               <div>
-                <strong>Mesa 4 · Listo</strong>
-                <small>Cocina → Mozo</small>
+                <strong>{t.hero.cardOrderTitle}</strong>
+                <small>{t.hero.cardOrderSub}</small>
               </div>
             </div>
           </motion.div>
         </div>
       </div>
 
-      <a href="#servicios" className="scroll-hint" aria-label="Bajar">
+      <a href="#servicios" className="scroll-hint" aria-label={t.hero.scroll}>
         <motion.span animate={{ y: [0, 10, 0] }} transition={{ duration: 1.6, repeat: Infinity }} />
       </a>
     </section>

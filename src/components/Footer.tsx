@@ -1,7 +1,10 @@
-import { brand, navLinks, waLink } from "../data/content";
+import { brand, waLink } from "../data/site";
+import { useLang } from "../i18n";
+import { navIds } from "./Navbar";
 import { InstagramIcon, TikTokIcon, WhatsAppIcon } from "./Shared";
 
 export function Footer() {
+  const { t } = useLang();
   return (
     <footer className="footer">
       <div className="container footer-inner">
@@ -10,32 +13,32 @@ export function Footer() {
             <span className="logo-badge">{brand.short}</span>
             <span className="logo-text">{brand.name.replace(brand.short + " ", "")}</span>
           </a>
-          <p>{brand.tagline}</p>
+          <p>{t.meta.tagline}</p>
         </div>
         <nav className="footer-links">
-          {navLinks.map((l) => (
-            <a key={l.id} href={`#${l.id}`}>
-              {l.label}
+          {navIds.map((id) => (
+            <a key={id} href={`#${id}`}>
+              {t.nav[id]}
             </a>
           ))}
         </nav>
         <div className="footer-social">
-          <a href={brand.instagram} target="_blank" rel="noreferrer" aria-label="Instagram">
+          <a href={brand.instagram} target="_blank" rel="noreferrer" aria-label={`Instagram ${brand.instagramHandle}`}>
             <InstagramIcon />
           </a>
-          <a href={brand.tiktok} target="_blank" rel="noreferrer" aria-label="TikTok">
+          <a href={brand.creatorTiktok} target="_blank" rel="noreferrer" aria-label="TikTok">
             <TikTokIcon />
           </a>
-          <a href={waLink("¡Hola! 👋")} target="_blank" rel="noreferrer" aria-label="WhatsApp">
+          <a href={waLink("👋")} target="_blank" rel="noreferrer" aria-label="WhatsApp">
             <WhatsAppIcon />
           </a>
         </div>
       </div>
       <div className="container footer-bottom">
         <span>
-          © {new Date().getFullYear()} {brand.name} · {brand.city}
+          © {new Date().getFullYear()} {brand.name} · {t.meta.city} · {t.footer.rights}
         </span>
-        <span>Hecho con 💚 y mucho mate</span>
+        <span>{t.meta.madeWith}</span>
       </div>
     </footer>
   );

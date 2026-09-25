@@ -1,9 +1,29 @@
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { brand, navLinks } from "../data/content";
+import { brand } from "../data/site";
+import { useLang, type Lang } from "../i18n";
+
+export const navIds = ["servicios", "nfc", "colabs", "redes", "sistemas", "ofertas", "faq"] as const;
+
+export function LangToggle() {
+  const { lang, setLang, t } = useLang();
+  return (
+    <div className="lang-toggle" role="group" aria-label={t.nav.lang}>
+      {(["es", "en"] as Lang[]).map((l) => (
+        <button key={l} onClick={() => setLang(l)} className={lang === l ? "active" : ""} aria-pressed={lang === l}>
+          {lang === l && (
+            <motion.span layoutId="lang-bg" className="lang-bg" transition={{ type: "spring", stiffness: 500, damping: 32 }} />
+          )}
+          <span className="lang-label">{l.toUpperCase()}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
 
 export function Navbar() {
+  const { t } = useLang();
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -24,18 +44,20 @@ export function Navbar() {
         </a>
 
         <nav className="nav-links">
-          {navLinks.map((l) => (
-            <a key={l.id} href={`#${l.id}`}>
-              {l.label}
+          {navIds.map((id) => (
+            <a key={id} href={`#${id}`}>
+              {t.nav[id]}
             </a>
           ))}
         </nav>
 
+        <LangToggle />
+
         <a href="#contacto" className="btn btn-primary btn-sm nav-cta">
-          Hablemos
+          {t.nav.cta}
         </a>
 
-        <button className="nav-burger" onClick={() => setOpen((o) => !o)} aria-label="Menú">
+        <button className="nav-burger" onClick={() => setOpen((o) => !o)} aria-label={t.nav.menu} aria-expanded={open}>
           {open ? <X /> : <Menu />}
         </button>
       </div>
@@ -48,16 +70,16 @@ export function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
           >
-            {[...navLinks, { id: "contacto", label: "Contacto" }].map((l, i) => (
+            {[...navIds, "contacto" as const].map((id, i) => (
               <motion.a
-                key={l.id}
-                href={`#${l.id}`}
+                key={id}
+                href={`#${id}`}
                 onClick={() => setOpen(false)}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
               >
-                {l.label}
+                {t.nav[id]}
               </motion.a>
             ))}
           </motion.nav>

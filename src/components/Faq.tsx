@@ -1,28 +1,22 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { useState } from "react";
-import { faqs } from "../data/content";
+import { useLang } from "../i18n";
 import { Reveal, SectionTitle } from "./Shared";
 
 export function Faq() {
+  const { t } = useLang();
   const [open, setOpen] = useState<number | null>(0);
 
   return (
     <section className="section" id="faq">
       <div className="container faq-inner">
-        <SectionTitle
-          eyebrow="Preguntas frecuentes"
-          title={
-            <>
-              Lo que todos nos <span className="hl">preguntan</span>
-            </>
-          }
-        />
+        <SectionTitle eyebrow={t.faq.eyebrow} title={t.faq.title} />
         <div className="faq-list">
-          {faqs.map((f, i) => {
+          {t.faq.items.map((f, i) => {
             const isOpen = open === i;
             return (
-              <Reveal key={f.q} delay={i * 0.05} y={20}>
+              <Reveal key={i} delay={i * 0.05} y={20}>
                 <div className={`faq-item${isOpen ? " open" : ""}`}>
                   <button className="faq-q" onClick={() => setOpen(isOpen ? null : i)} aria-expanded={isOpen}>
                     <span>{f.q}</span>

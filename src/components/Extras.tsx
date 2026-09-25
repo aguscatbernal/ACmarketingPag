@@ -1,5 +1,6 @@
 import { motion, useScroll, useSpring } from "framer-motion";
-import { waLink } from "../data/content";
+import { waLink } from "../data/site";
+import { useLang } from "../i18n";
 import { WhatsAppIcon } from "./Shared";
 
 export function ScrollProgress() {
@@ -9,13 +10,14 @@ export function ScrollProgress() {
 }
 
 export function WhatsAppFloat() {
+  const { t } = useLang();
   return (
     <motion.a
       className="wa-float"
-      href={waLink("¡Hola! Vi la página y quiero info 🙌")}
+      href={waLink(t.hero.waMsg)}
       target="_blank"
       rel="noreferrer"
-      aria-label="Escribinos por WhatsApp"
+      aria-label="WhatsApp"
       initial={{ scale: 0, rotate: -90 }}
       animate={{ scale: 1, rotate: 0 }}
       transition={{ delay: 1.2, type: "spring", stiffness: 260, damping: 18 }}

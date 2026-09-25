@@ -1,5 +1,6 @@
 import { animate, motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useLang } from "../i18n";
 
 export const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -27,6 +28,23 @@ export function Reveal({
   );
 }
 
+/** Convierte "texto *resaltado*" en texto con <span> resaltado. */
+export function Highlight({ text, light }: { text: string; light?: boolean }) {
+  return (
+    <>
+      {text.split("*").map((part, i) =>
+        i % 2 ? (
+          <span key={i} className={light ? "hl-light" : "hl"}>
+            {part}
+          </span>
+        ) : (
+          part
+        )
+      )}
+    </>
+  );
+}
+
 export function SectionTitle({
   eyebrow,
   title,
@@ -34,14 +52,16 @@ export function SectionTitle({
   light,
 }: {
   eyebrow: string;
-  title: ReactNode;
+  title: string;
   subtitle?: string;
   light?: boolean;
 }) {
   return (
     <Reveal className={`section-title${light ? " light" : ""}`}>
       <span className="eyebrow">{eyebrow}</span>
-      <h2>{title}</h2>
+      <h2>
+        <Highlight text={title} light={light} />
+      </h2>
       {subtitle && <p>{subtitle}</p>}
     </Reveal>
   );
@@ -49,35 +69,36 @@ export function SectionTitle({
 
 export function Counter({
   to,
+  from = 0,
   prefix = "",
   suffix = "",
   duration = 1.8,
 }: {
   to: number;
+  from?: number;
   prefix?: string;
   suffix?: string;
   duration?: number;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
-  const [val, setVal] = useState(0);
+  const [val, setVal] = useState(from);
+  const { lang } = useLang();
 
   useEffect(() => {
     if (!inView) return;
-    const controls = animate(0, to, { duration, ease: "easeOut", onUpdate: setVal });
+    const controls = animate(from, to, { duration, ease: "easeOut", onUpdate: setVal });
     return () => controls.stop();
-  }, [inView, to, duration]);
+  }, [inView, from, to, duration]);
 
   return (
     <span ref={ref}>
       {prefix}
-      {Math.round(val).toLocaleString("es-AR")}
+      {Math.round(val).toLocaleString(lang === "en" ? "en-GB" : "es-ES")}
       {suffix}
     </span>
   );
 }
-
-export const money = (n: number) => "$" + Math.round(n).toLocaleString("es-AR");
 
 // ---------- Íconos de marcas (SVG propios) ----------
 type IconProps = { size?: number };

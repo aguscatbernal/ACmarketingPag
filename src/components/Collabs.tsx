@@ -1,8 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Eye, Play } from "lucide-react";
 import { useState } from "react";
-import { brand, collabCategories, collabIncludes, creator, reels, waLink } from "../data/content";
+import { brand, creatorStats, reelCats, reels, waLink, type ReelCat } from "../data/site";
+import { useLang } from "../i18n";
 import { Counter, InstagramIcon, Reveal, SectionTitle, TikTokIcon, ease } from "./Shared";
+
+const creatorName = "Cele La Rocca"; // EDITAR si el nombre es otro
 
 function Avatar() {
   const [failed, setFailed] = useState(false);
@@ -10,63 +13,56 @@ function Avatar() {
     <div className="creator-avatar">
       <motion.div className="creator-ring" animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }} />
       {failed ? (
-        <span className="creator-initial">{creator.name[0]}</span>
+        <span className="creator-initial">{creatorName[0]}</span>
       ) : (
-        <img src={creator.photo} alt={creator.name} onError={() => setFailed(true)} />
+        <img src={brand.creatorPhoto} alt={creatorName} onError={() => setFailed(true)} />
       )}
     </div>
   );
 }
 
 export function Collabs() {
-  const [cat, setCat] = useState("Todos");
-  const list = cat === "Todos" ? reels : reels.filter((r) => r.category === cat);
+  const { t } = useLang();
+  const c = t.collabs;
+  const [cat, setCat] = useState<ReelCat | "all">("all");
+  const list = cat === "all" ? reels : reels.filter((r) => r.cat === cat);
 
   return (
     <section className="section collabs-section" id="colabs">
       <div className="container">
-        <SectionTitle
-          light
-          eyebrow="Colaboraciones pagas"
-          title={
-            <>
-              Contenido que la gente <span className="hl-light">mira hasta el final</span>
-            </>
-          }
-          subtitle="Reels y TikToks para restaurantes, bares, tiendas, estéticas, hoteles y lugares de entretenimiento."
-        />
+        <SectionTitle light eyebrow={c.eyebrow} title={c.title} subtitle={c.subtitle} />
 
         <div className="collabs-top">
           <Reveal className="creator-card">
             <Avatar />
-            <h3>{creator.name}</h3>
-            <p className="creator-bio">{creator.bio}</p>
+            <h3>{creatorName}</h3>
+            <p className="creator-bio">{c.bio}</p>
             <div className="creator-stats">
-              {creator.stats.map((s) => (
-                <div key={s.label}>
+              {creatorStats.map((s) => (
+                <div key={s.key}>
                   <strong>
                     <Counter to={s.value} prefix={s.prefix} suffix={s.suffix} />
                   </strong>
-                  <span>{s.label}</span>
+                  <span>{c.stats[s.key]}</span>
                 </div>
               ))}
             </div>
             <div className="creator-links">
-              <motion.a href={brand.instagram} target="_blank" rel="noreferrer" className="social-btn ig" whileHover={{ y: -4 }} whileTap={{ scale: 0.95 }}>
-                <InstagramIcon /> {creator.handleIg}
+              <motion.a href={brand.creatorInstagram} target="_blank" rel="noreferrer" className="social-btn ig" whileHover={{ y: -4 }} whileTap={{ scale: 0.95 }}>
+                <InstagramIcon /> {brand.creatorInstagramHandle}
               </motion.a>
-              <motion.a href={brand.tiktok} target="_blank" rel="noreferrer" className="social-btn tt" whileHover={{ y: -4 }} whileTap={{ scale: 0.95 }}>
-                <TikTokIcon /> {creator.handleTiktok}
+              <motion.a href={brand.creatorTiktok} target="_blank" rel="noreferrer" className="social-btn tt" whileHover={{ y: -4 }} whileTap={{ scale: 0.95 }}>
+                <TikTokIcon /> {brand.creatorTiktokHandle}
               </motion.a>
             </div>
           </Reveal>
 
           <Reveal className="includes-card" delay={0.15}>
-            <h3>¿Qué incluye una colab?</h3>
+            <h3>{c.includesTitle}</h3>
             <ul>
-              {collabIncludes.map((c, i) => (
+              {c.includes.map((item, i) => (
                 <motion.li
-                  key={c}
+                  key={item}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -75,26 +71,21 @@ export function Collabs() {
                   <span className="check-bubble">
                     <Check size={14} />
                   </span>
-                  {c}
+                  {item}
                 </motion.li>
               ))}
             </ul>
-            <a
-              className="btn btn-light"
-              href={waLink("¡Hola! Quiero una colaboración para mi negocio 🎬")}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Quiero una colab 🎬
+            <a className="btn btn-light" href={waLink(c.waMsg)} target="_blank" rel="noreferrer">
+              {c.cta}
             </a>
           </Reveal>
         </div>
 
         <Reveal className="chips" delay={0.1}>
-          {collabCategories.map((c) => (
-            <button key={c} className={`chip${cat === c ? " active" : ""}`} onClick={() => setCat(c)}>
-              {cat === c && <motion.span layoutId="chip-bg" className="chip-bg" transition={{ type: "spring", stiffness: 400, damping: 30 }} />}
-              <span className="chip-label">{c}</span>
+          {(["all", ...reelCats] as const).map((k) => (
+            <button key={k} className={`chip${cat === k ? " active" : ""}`} onClick={() => setCat(k)}>
+              {cat === k && <motion.span layoutId="chip-bg" className="chip-bg" transition={{ type: "spring", stiffness: 400, damping: 30 }} />}
+              <span className="chip-label">{k === "all" ? c.all : c.cats[k]}</span>
             </button>
           ))}
         </Reveal>
@@ -104,8 +95,8 @@ export function Collabs() {
             {list.map((r) => (
               <motion.a
                 layout
-                key={r.title}
-                href={r.url ?? brand.instagram}
+                key={r.id}
+                href={r.url ?? brand.creatorInstagram}
                 target="_blank"
                 rel="noreferrer"
                 className="reel-card"
@@ -116,7 +107,7 @@ export function Collabs() {
                 transition={{ duration: 0.4, ease }}
                 whileHover="hover"
               >
-                <span className="reel-cat">{r.category}</span>
+                <span className="reel-cat">{c.cats[r.cat]}</span>
                 <motion.span className="reel-card-emoji" variants={{ hover: { scale: 1.25, rotate: -8 } }}>
                   {r.emoji}
                 </motion.span>
@@ -124,9 +115,9 @@ export function Collabs() {
                   <Play size={22} fill="currentColor" />
                 </motion.span>
                 <div className="reel-card-info">
-                  <strong>{r.title}</strong>
+                  <strong>{c.reelTitles[r.id]}</strong>
                   <span>
-                    <Eye size={14} /> {r.views} vistas
+                    <Eye size={14} /> {r.views} {c.views}
                   </span>
                 </div>
               </motion.a>

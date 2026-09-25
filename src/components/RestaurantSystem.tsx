@@ -1,22 +1,19 @@
 import { AnimatePresence, LayoutGroup, motion, useInView } from "framer-motion";
 import { ChefHat, ClipboardList, BellRing } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { demoMenu, systemRoles, techStack, waLink } from "../data/content";
-import { Reveal, SectionTitle, ease, money } from "./Shared";
+import { demoMenu, techStack, waLink, type MenuId } from "../data/site";
+import { useLang } from "../i18n";
+import { Reveal, SectionTitle, ease } from "./Shared";
 
 type Order = {
   id: number;
   table: number;
-  items: string[];
+  items: MenuId[];
   total: number;
   status: 0 | 1 | 2; // 0 mozo, 1 cocina, 2 listo
 };
 
-const columns = [
-  { title: "Mozo", sub: "Pedido tomado", icon: ClipboardList },
-  { title: "Cocina", sub: "Preparando", icon: ChefHat },
-  { title: "Listo", sub: "Para servir", icon: BellRing },
-];
+const columnIcons = [ClipboardList, ChefHat, BellRing];
 
 let nextId = 1;
 function newOrder(): Order {
@@ -25,13 +22,15 @@ function newOrder(): Order {
   return {
     id: nextId++,
     table: 1 + Math.floor(Math.random() * 12),
-    items: picks.map((p) => p.name),
+    items: picks.map((p) => p.id),
     total: picks.reduce((a, p) => a + p.price, 0),
     status: 0,
   };
 }
 
 export function RestaurantSystem() {
+  const { t, money } = useLang();
+  const sys = t.system;
   const boardRef = useRef<HTMLDivElement>(null);
   const inView = useInView(boardRef, { margin: "-100px" });
   const [orders, setOrders] = useState<Order[]>(() => [
@@ -39,7 +38,7 @@ export function RestaurantSystem() {
     newOrder(),
   ]);
   const ordersRef = useRef(orders);
-  const [sales, setSales] = useState(184500);
+  const [sales, setSales] = useState(1845.5);
   const [served, setServed] = useState(23);
   const [bars, setBars] = useState([40, 65, 50, 80, 55, 90, 70]);
 
@@ -73,15 +72,7 @@ export function RestaurantSystem() {
   return (
     <section className="section" id="sistemas">
       <div className="container">
-        <SectionTitle
-          eyebrow="Webs & Apps"
-          title={
-            <>
-              Tu restaurante, <span className="hl">conectado en vivo</span>
-            </>
-          }
-          subtitle="Un sistema propio con admin, mozo y cocina que se hablan en tiempo real. Miralo funcionando 👇"
-        />
+        <SectionTitle eyebrow={sys.eyebrow} title={sys.title} subtitle={sys.subtitle} />
 
         <Reveal>
           <div className="board" ref={boardRef}>
@@ -91,29 +82,29 @@ export function RestaurantSystem() {
               <span className="dot g" />
               <span className="board-url">tu-restaurante.app/panel</span>
               <span className="live">
-                <span className="live-dot" /> EN VIVO
+                <span className="live-dot" /> {sys.live}
               </span>
             </div>
 
             <div className="board-kpis">
               <div className="kpi">
-                <small>Ventas de hoy</small>
+                <small>{sys.salesToday}</small>
                 <motion.strong key={sales} initial={{ scale: 1.15, color: "#0f9d84" }} animate={{ scale: 1, color: "#0c2622" }}>
-                  {money(sales)}
+                  {money(sales, 2)}
                 </motion.strong>
               </div>
               <div className="kpi">
-                <small>Pedidos servidos</small>
+                <small>{sys.served}</small>
                 <motion.strong key={served} initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
                   {served}
                 </motion.strong>
               </div>
               <div className="kpi">
-                <small>Ticket promedio</small>
-                <strong>{money(sales / served)}</strong>
+                <small>{sys.avgTicket}</small>
+                <strong>{money(sales / served, 2)}</strong>
               </div>
               <div className="kpi kpi-chart">
-                <small>Ventas por hora</small>
+                <small>{sys.perHour}</small>
                 <div className="mini-bars">
                   {bars.map((h, i) => (
                     <motion.span key={i} initial={{ height: 0 }} whileInView={{ height: `${h}%` }} animate={{ height: `${h}%` }} transition={{ duration: 0.6, delay: i * 0.05 }} />
@@ -124,11 +115,11 @@ export function RestaurantSystem() {
 
             <LayoutGroup>
               <div className="board-cols">
-                {columns.map((col, ci) => {
-                  const Icon = col.icon;
+                {sys.columns.map((col, ci) => {
+                  const Icon = columnIcons[ci];
                   const colOrders = orders.filter((o) => o.status === ci);
                   return (
-                    <div key={col.title} className={`board-col col-${ci}`}>
+                    <div key={ci} className={`board-col col-${ci}`}>
                       <div className="col-head">
                         <Icon size={18} />
                         <strong>{col.title}</strong>
@@ -148,15 +139,17 @@ export function RestaurantSystem() {
                               transition={{ type: "spring", stiffness: 260, damping: 26 }}
                             >
                               <div className="order-top">
-                                <b>Mesa {o.table}</b>
+                                <b>
+                                  {sys.table} {o.table}
+                                </b>
                                 <span>#{String(o.id).padStart(3, "0")}</span>
                               </div>
                               <ul>
                                 {o.items.map((it) => (
-                                  <li key={it}>{it}</li>
+                                  <li key={it}>{t.menu[it]}</li>
                                 ))}
                               </ul>
-                              <div className="order-total">{money(o.total)}</div>
+                              <div className="order-total">{money(o.total, 2)}</div>
                             </motion.div>
                           ))}
                         </AnimatePresence>
@@ -170,8 +163,8 @@ export function RestaurantSystem() {
         </Reveal>
 
         <div className="roles-grid">
-          {systemRoles.map((r, i) => (
-            <Reveal key={r.id} delay={i * 0.1} className="role-card">
+          {sys.roles.map((r, i) => (
+            <Reveal key={r.title} delay={i * 0.1} className="role-card">
               <span className="role-emoji">{r.emoji}</span>
               <h3>{r.title}</h3>
               <p>{r.text}</p>
@@ -185,8 +178,8 @@ export function RestaurantSystem() {
               {t}
             </motion.span>
           ))}
-          <a className="btn btn-primary btn-sm" href={waLink("¡Hola! Quiero ver una demo del sistema para restaurantes 👨‍🍳")} target="_blank" rel="noreferrer">
-            Pedir una demo
+          <a className="btn btn-primary btn-sm" href={waLink(sys.waMsg)} target="_blank" rel="noreferrer">
+            {sys.cta}
           </a>
         </Reveal>
       </div>

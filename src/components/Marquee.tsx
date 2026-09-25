@@ -1,7 +1,8 @@
-import { rubros } from "../data/content";
+import { useLang } from "../i18n";
 
 export function Marquee() {
-  const items = [...rubros, ...rubros];
+  const { t } = useLang();
+  const items = [...t.rubros, ...t.rubros];
   return (
     <div className="marquee-wrap" aria-hidden>
       <div className="marquee">
