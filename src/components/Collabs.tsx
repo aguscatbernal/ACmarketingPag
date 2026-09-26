@@ -121,9 +121,16 @@ export function Collabs() {
                     {r.emoji}
                   </motion.span>
                 )}
-                <motion.span className="reel-card-play" initial={{ scale: 0.8, opacity: 0.85 }} variants={{ hover: { scale: 1.1, opacity: 1 } }}>
-                  <Play size={22} fill="currentColor" />
-                </motion.span>
+                {/* Las portadas de Instagram ya traen su propio ▶ */}
+                {!(r.cover && r.platform === "instagram") && (
+                  <motion.span
+                    className={`reel-card-play${r.cover ? " centered" : ""}`}
+                    initial={{ scale: 0.8, opacity: 0.85 }}
+                    variants={{ hover: { scale: 1.1, opacity: 1 } }}
+                  >
+                    <Play size={22} fill="currentColor" />
+                  </motion.span>
+                )}
                 <div className="reel-card-info">
                   <strong>{c.reelTitles[r.id]}</strong>
                   <span>

@@ -63,7 +63,7 @@ export const reelCats: ReelCat[] = ["food", "beauty", "fashion", "brands", "fun"
 
 // Colaboraciones reales de Cele. Para añadir una: copia una línea, cambia el enlace
 // y añade su título en es.ts y en.ts (collabs.reelTitles, con el mismo id).
-// Portada opcional: guarda la imagen en /public/reels/ y pon cover: "/reels/nombre.jpg"
+// Portada: imagen vertical en /public/reels/ (cover: "/reels/nombre.webp"). Sin portada se usa emoji + degradado.
 export const reels: {
   id: string;
   cat: ReelCat;
@@ -74,21 +74,21 @@ export const reels: {
   colors: [string, string];
   cover?: string;
 }[] = [
-  { id: "pizza", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/Dcy4jeyI1UZ/", place: "Veridian Pizza · Málaga", emoji: "🍕", colors: ["#ff7a6b", "#ffc94d"] },
-  { id: "museum", cat: "fun", platform: "instagram", url: "https://www.instagram.com/p/DboZ7w5ITS2/", place: "Museum of Senses · Madrid", emoji: "🤯", colors: ["#6c4cf1", "#ff7ac6"] },
-  { id: "spa", cat: "beauty", platform: "instagram", url: "https://www.instagram.com/p/DYm0aFno5Xe/", place: "Guinda Wellness Spa · Mijas", emoji: "🕯️", colors: ["#00564c", "#8ee8d2"] },
-  { id: "outlet", cat: "fashion", platform: "instagram", url: "https://www.instagram.com/p/DTlHmoHCFtl/", place: "Last Price Outlet · Málaga", emoji: "🛍️", colors: ["#1f2937", "#00a88f"] },
-  { id: "loreal", cat: "brands", platform: "tiktok", url: "https://www.tiktok.com/@celelarocca/video/7681676956655439126", place: "L'Oréal Professionnel", emoji: "💇‍♀️", colors: ["#1f2937", "#d4a373"] },
-  { id: "casanostra", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/DcrPHR9I6jJ/", place: "A Casa Nostra · Torremolinos", emoji: "🍝", colors: ["#16a34a", "#dc2626"] },
-  { id: "matcha", cat: "beauty", platform: "instagram", url: "https://www.instagram.com/p/DYsAKGYolc0/", place: "Japanese Head Spa · Málaga", emoji: "🍵", colors: ["#4d7c0f", "#bef264"] },
-  { id: "shoes", cat: "fashion", platform: "instagram", url: "https://www.instagram.com/p/DUJLJw5CDoA/", place: "Timbos · Málaga", emoji: "👠", colors: ["#ff9ec7", "#ffd6e7"] },
-  { id: "brunch", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/Dbd2iIwIAdQ/", place: "Billy Brunch · Madrid", emoji: "🥞", colors: ["#f59e0b", "#fde68a"] },
-  { id: "canva", cat: "brands", platform: "tiktok", url: "https://www.tiktok.com/@celelarocca/video/7578842410382380310", place: "Canva", emoji: "🎨", colors: ["#00c4cc", "#7d2ae8"] },
-  { id: "kebab", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/Dc_uqGwJ4i6/", place: "Berliner Bros Döner · Marbella", emoji: "🥙", colors: ["#dc2626", "#fb923c"] },
-  { id: "optica", cat: "fashion", platform: "instagram", url: "https://www.instagram.com/p/DUTrpA_CP9V/", place: "Óptica Merkavision · Málaga", emoji: "👓", colors: ["#0ea5e9", "#6ee7b7"] },
-  { id: "lahiedra", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/DdpJNe-IrFW/", place: "La Hiedra · Málaga", emoji: "🌿", colors: ["#00695c", "#4fd1b5"] },
-  { id: "icecream", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/DdcE6hZoDc0/", place: "Arkyn Ice Cream", emoji: "🍦", colors: ["#6366f1", "#c4b5fd"] },
-  { id: "swissbutter", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/DbY9F4KI8G8/", place: "Swiss Butter · Madrid", emoji: "🥩", colors: ["#7c2d12", "#f59e0b"] },
+  { id: "pizza", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/Dcy4jeyI1UZ/", place: "Veridian Pizza · Málaga", emoji: "🍕", colors: ["#ff7a6b", "#ffc94d"], cover: "/reels/pizza.webp" },
+  { id: "museum", cat: "fun", platform: "instagram", url: "https://www.instagram.com/p/DboZ7w5ITS2/", place: "Museum of Senses · Madrid", emoji: "🤯", colors: ["#6c4cf1", "#ff7ac6"], cover: "/reels/museum.webp" },
+  { id: "spa", cat: "beauty", platform: "instagram", url: "https://www.instagram.com/p/DYm0aFno5Xe/", place: "Guinda Wellness Spa · Mijas", emoji: "🕯️", colors: ["#00564c", "#8ee8d2"], cover: "/reels/spa.webp" },
+  { id: "outlet", cat: "fashion", platform: "instagram", url: "https://www.instagram.com/p/DTlHmoHCFtl/", place: "Last Price Outlet · Málaga", emoji: "🛍️", colors: ["#1f2937", "#00a88f"], cover: "/reels/outlet.webp" },
+  { id: "loreal", cat: "brands", platform: "tiktok", url: "https://www.tiktok.com/@celelarocca/video/7681676956655439126", place: "L'Oréal Professionnel", emoji: "💇‍♀️", colors: ["#1f2937", "#d4a373"], cover: "/reels/loreal.webp" },
+  { id: "casanostra", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/DcrPHR9I6jJ/", place: "A Casa Nostra · Torremolinos", emoji: "🍝", colors: ["#16a34a", "#dc2626"], cover: "/reels/casanostra.webp" },
+  { id: "matcha", cat: "beauty", platform: "instagram", url: "https://www.instagram.com/p/DYsAKGYolc0/", place: "Japanese Head Spa · Málaga", emoji: "🍵", colors: ["#4d7c0f", "#bef264"], cover: "/reels/matcha.webp" },
+  { id: "shoes", cat: "fashion", platform: "instagram", url: "https://www.instagram.com/p/DUJLJw5CDoA/", place: "Timbos · Málaga", emoji: "👠", colors: ["#ff9ec7", "#ffd6e7"], cover: "/reels/shoes.webp" },
+  { id: "brunch", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/Dbd2iIwIAdQ/", place: "Billy Brunch · Madrid", emoji: "🥞", colors: ["#f59e0b", "#fde68a"], cover: "/reels/brunch.webp" },
+  { id: "canva", cat: "brands", platform: "tiktok", url: "https://www.tiktok.com/@celelarocca/video/7578842410382380310", place: "Canva", emoji: "🎨", colors: ["#00c4cc", "#7d2ae8"], cover: "/reels/canva.webp" },
+  { id: "kebab", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/Dc_uqGwJ4i6/", place: "Berliner Bros Döner · Marbella", emoji: "🥙", colors: ["#dc2626", "#fb923c"], cover: "/reels/kebab.webp" },
+  { id: "optica", cat: "fashion", platform: "instagram", url: "https://www.instagram.com/p/DUTrpA_CP9V/", place: "Óptica Merkavision · Málaga", emoji: "👓", colors: ["#0ea5e9", "#6ee7b7"], cover: "/reels/optica.webp" },
+  { id: "lahiedra", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/DdpJNe-IrFW/", place: "La Hiedra · Málaga", emoji: "🌿", colors: ["#00695c", "#4fd1b5"], cover: "/reels/lahiedra.webp" },
+  { id: "icecream", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/DdcE6hZoDc0/", place: "Arkyn Ice Cream", emoji: "🍦", colors: ["#6366f1", "#c4b5fd"], cover: "/reels/icecream.webp" },
+  { id: "swissbutter", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/DbY9F4KI8G8/", place: "Swiss Butter · Madrid", emoji: "🥩", colors: ["#7c2d12", "#f59e0b"], cover: "/reels/swissbutter.webp" },
 ];
 
 // Carta de ejemplo para las demos (precios en euros)

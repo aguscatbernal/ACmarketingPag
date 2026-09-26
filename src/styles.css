@@ -351,6 +351,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.05; letter-spacing
 .reel-cat { position: relative; z-index: 1; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(6px); padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
 .reel-card-emoji { position: absolute; top: 28%; left: 50%; margin-left: -2.2rem; font-size: 4.4rem; filter: drop-shadow(0 14px 14px rgba(0, 0, 0, 0.3)); }
 .reel-card-play { position: absolute; top: 50%; left: 50%; margin: 16px 0 0 -24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(6px); display: grid; place-items: center; z-index: 1; }
+.reel-card-play.centered { margin: -24px 0 0 -24px; }
 .reel-card-info { position: relative; z-index: 1; margin-top: auto; }
 .reel-card-info strong { display: block; font-size: 0.95rem; line-height: 1.25; margin-bottom: 6px; }
 .reel-card-info span { display: flex; align-items: center; gap: 4px; font-size: 0.8rem; opacity: 0.9; }
