@@ -493,6 +493,17 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.05; letter-spacing
 .contact-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 30px; align-items: start; }
 .contact-channels { display: flex; flex-direction: column; gap: 14px; }
 .channel { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-radius: 18px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(185, 243, 228, 0.18); }
+.channel-row { position: relative; }
+.channel-row:has(.channel-copy) .channel { padding-right: 118px; }
+.channel-copy {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px;
+  background: rgba(185, 243, 228, 0.14); color: var(--mint-200); font-size: 0.8rem; font-weight: 700;
+  border: 1px solid rgba(185, 243, 228, 0.25); transition: background 0.2s, color 0.2s;
+}
+.channel-copy:hover { background: rgba(185, 243, 228, 0.28); color: #fff; }
+.channel-copy.done { background: var(--mint-300); color: var(--green-950); }
+.channel small { word-break: break-word; }
 .channel strong { display: block; }
 .channel small { color: var(--mint-200); }
 .channel-icon { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; flex-shrink: 0; }

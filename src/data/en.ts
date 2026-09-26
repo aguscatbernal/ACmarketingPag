@@ -343,6 +343,8 @@ export const en: Content = {
     title: "Shall we start? *Message us* 👋",
     subtitle: "Leave us your enquiry and we'll get back to you soon. Or message us directly on WhatsApp or by email.",
     waValue: "We reply fast",
+    copy: "Copy",
+    copied: "Copied!",
     name: "Your name",
     namePh: "e.g. Lucy",
     business: "Your business",

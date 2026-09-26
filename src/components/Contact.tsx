@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { AlertCircle, Loader2, Mail, Send } from "lucide-react";
+import { AlertCircle, Check, Copy, Loader2, Mail, Send } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from "react";
 import { brand, fillLegal, mailtoLink, phoneDisplay, waLink } from "../data/site";
 import { useLang } from "../i18n";
@@ -32,8 +32,28 @@ export function Contact() {
   >(null);
   const startedAt = useRef(Date.now());
   const sentTimer = useRef<number | undefined>(undefined);
+  const [copied, setCopied] = useState<string | null>(null);
+  const copiedTimer = useRef<number | undefined>(undefined);
 
-  useEffect(() => () => window.clearTimeout(sentTimer.current), []);
+  useEffect(
+    () => () => {
+      window.clearTimeout(sentTimer.current);
+      window.clearTimeout(copiedTimer.current);
+    },
+    []
+  );
+
+  // Por si el visitante no tiene programa de correo configurado: copia el dato para pegarlo donde quiera
+  const copyValue = async (label: string, value: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(label);
+      window.clearTimeout(copiedTimer.current);
+      copiedTimer.current = window.setTimeout(() => setCopied(null), 2000);
+    } catch {
+      /* sin permiso de portapapeles: el dato igual está visible */
+    }
+  };
 
   const toggle = (i: number) => setPicked((p) => (p.includes(i) ? p.filter((x) => x !== i) : [...p, i]));
 
@@ -133,8 +153,8 @@ export function Contact() {
   };
 
   const channels = [
-    { icon: <WhatsAppIcon size={22} />, label: "WhatsApp", value: `${phoneDisplay()} · ${c.waValue}`, href: waLink("👋"), cls: "wa" },
-    { icon: <Mail size={22} />, label: "Email", value: brand.email().replace("@", " [at] "), href: "#contacto", cls: "mail", onClick: openMail },
+    { icon: <WhatsAppIcon size={22} />, label: "WhatsApp", value: `${phoneDisplay()} · ${c.waValue}`, href: waLink("👋"), cls: "wa", copy: phoneDisplay() },
+    { icon: <Mail size={22} />, label: "Email", value: brand.email(), href: "#contacto", cls: "mail", onClick: openMail, copy: brand.email() },
     { icon: <InstagramIcon size={22} />, label: "Instagram", value: brand.instagramHandle, href: brand.instagram, cls: "ig" },
     { icon: <TikTokIcon size={22} />, label: "TikTok", value: brand.creatorTiktokHandle, href: brand.creatorTiktok, cls: "tt" },
   ];
@@ -147,25 +167,37 @@ export function Contact() {
         <div className="contact-grid">
           <Reveal className="contact-channels">
             {channels.map((ch, i) => (
-              <motion.a
-                key={ch.label}
-                href={ch.href}
-                onClick={ch.onClick}
-                target={ch.onClick ? undefined : "_blank"}
-                rel="noreferrer"
-                className={`channel ${ch.cls}`}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ x: 8 }}
-              >
-                <span className="channel-icon">{ch.icon}</span>
-                <span>
-                  <strong>{ch.label}</strong>
-                  <small>{ch.value}</small>
-                </span>
-              </motion.a>
+              <div key={ch.label} className="channel-row">
+                <motion.a
+                  href={ch.href}
+                  onClick={ch.onClick}
+                  target={ch.onClick ? undefined : "_blank"}
+                  rel="noreferrer"
+                  className={`channel ${ch.cls}`}
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ x: 8 }}
+                >
+                  <span className="channel-icon">{ch.icon}</span>
+                  <span>
+                    <strong>{ch.label}</strong>
+                    <small>{ch.value}</small>
+                  </span>
+                </motion.a>
+                {ch.copy && (
+                  <button
+                    type="button"
+                    className={`channel-copy${copied === ch.label ? " done" : ""}`}
+                    onClick={() => copyValue(ch.label, ch.copy)}
+                    aria-label={`${c.copy} ${ch.label}`}
+                  >
+                    {copied === ch.label ? <Check size={16} /> : <Copy size={16} />}
+                    <span>{copied === ch.label ? c.copied : c.copy}</span>
+                  </button>
+                )}
+              </div>
             ))}
           </Reveal>
 

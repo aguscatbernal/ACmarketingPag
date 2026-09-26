@@ -345,6 +345,8 @@ export const es = {
     title: "¿Empezamos? *Escríbenos* 👋",
     subtitle: "Déjanos tu consulta y te contestamos enseguida. Si lo prefieres, escríbenos directo por WhatsApp o email.",
     waValue: "Respondemos rápido",
+    copy: "Copiar",
+    copied: "¡Copiado!",
     name: "Tu nombre",
     namePh: "Ej.: Lucía",
     business: "Tu negocio",
