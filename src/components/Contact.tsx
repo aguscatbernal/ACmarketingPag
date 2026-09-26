@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertCircle, Mail, Send } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from "react";
-import { brand, fillLegal, waLink } from "../data/site";
+import { brand, fillLegal, mailtoLink, phoneDisplay, waLink } from "../data/site";
 import { useLang } from "../i18n";
 import { LIMITS, checkSubmission, clean, recordSend, type SpamCheck } from "../lib/antispam";
 import { legalHref } from "./LegalModal";
@@ -19,7 +19,7 @@ export function Contact() {
   const [picked, setPicked] = useState<number[]>([]);
   const [msg, setMsg] = useState("");
   const [honeypot, setHoneypot] = useState("");
-  const [sent, setSent] = useState(false);
+  const [sent, setSent] = useState<false | "wa" | "email">(false);
   const [accepted, setAccepted] = useState(false);
   const [error, setError] = useState<Exclude<SpamCheck, { ok: true }> | { ok: false; reason: "privacy" } | null>(null);
   const startedAt = useRef(Date.now());
@@ -29,12 +29,12 @@ export function Contact() {
 
   const toggle = (i: number) => setPicked((p) => (p.includes(i) ? p.filter((x) => x !== i) : [...p, i]));
 
-  const showSent = () => {
-    setSent(true);
+  const showSent = (via: "wa" | "email") => {
+    setSent(via);
     sentTimer.current = window.setTimeout(() => setSent(false), 3500);
   };
 
-  const submit = (e: FormEvent) => {
+  const submit = (e: FormEvent, via: "wa" | "email" = "wa") => {
     e.preventDefault();
     if (sent) return;
 
@@ -46,7 +46,7 @@ export function Contact() {
     if (!check.ok) {
       // Al bot le hacemos creer que salió bien, pero no se abre nada
       if (check.reason === "honeypot") {
-        showSent();
+        showSent(via);
         return;
       }
     }
@@ -69,8 +69,9 @@ export function Contact() {
 
     recordSend();
     setError(null);
-    window.open(waLink(text), "_blank", "noopener,noreferrer");
-    showSent();
+    if (via === "wa") window.open(waLink(text), "_blank", "noopener,noreferrer");
+    else window.location.href = mailtoLink(`${c.emailSubject} · ${cleanName}`, text);
+    showSent(via);
   };
 
   const errorText = !error
@@ -90,7 +91,7 @@ export function Contact() {
   };
 
   const channels = [
-    { icon: <WhatsAppIcon size={22} />, label: "WhatsApp", value: c.waValue, href: waLink("👋"), cls: "wa" },
+    { icon: <WhatsAppIcon size={22} />, label: "WhatsApp", value: `${phoneDisplay()} · ${c.waValue}`, href: waLink("👋"), cls: "wa" },
     { icon: <Mail size={22} />, label: "Email", value: brand.email().replace("@", " [at] "), href: "#contacto", cls: "mail", onClick: openMail },
     { icon: <InstagramIcon size={22} />, label: "Instagram", value: brand.instagramHandle, href: brand.instagram, cls: "ig" },
     { icon: <TikTokIcon size={22} />, label: "TikTok", value: brand.creatorTiktokHandle, href: brand.creatorTiktok, cls: "tt" },
@@ -230,9 +231,21 @@ export function Contact() {
               </AnimatePresence>
 
               <div className="submit-wrap">
-                <motion.button type="submit" className="btn btn-primary btn-block" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }} disabled={sent}>
-                  <Send size={18} /> {c.send}
-                </motion.button>
+                <div className="submit-buttons">
+                  <motion.button type="submit" className="btn btn-primary" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }} disabled={!!sent}>
+                    <Send size={18} /> {c.send}
+                  </motion.button>
+                  <motion.button
+                    type="button"
+                    className="btn btn-outline"
+                    onClick={(e) => submit(e, "email")}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                    disabled={!!sent}
+                  >
+                    <Mail size={18} /> {c.sendEmail}
+                  </motion.button>
+                </div>
                 <AnimatePresence>
                   {sent &&
                     Array.from({ length: 14 }).map((_, i) => (
@@ -257,7 +270,7 @@ export function Contact() {
               <AnimatePresence>
                 {sent && (
                   <motion.p className="sent-msg" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                    {c.sent}
+                    {sent === "email" ? c.sentEmail : c.sent}
                   </motion.p>
                 )}
               </AnimatePresence>

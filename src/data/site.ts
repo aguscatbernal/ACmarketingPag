@@ -13,8 +13,8 @@ const decode = (s: string) => [...atob(s)].reverse().join("");
 export const brand = {
   name: "AC Marketing",
   short: "AC",
-  whatsapp: () => decode("MDAwMDAwMDA2NDM="), // EDITAR: +34 600 000 000
-  email: () => decode("c2UuZ25pdGVrcmFtY2FAYWxvaA=="), // EDITAR: hola@acmarketing.es
+  whatsapp: () => decode("NTY3NzY1MzE2NDM="), // +34 613 56 77 65
+  email: () => decode("bW9jLmxpYW1nQGF5Z25pdGVrcmFtYy5h"), // a.cmarketingya@gmail.com
   instagram: "https://www.instagram.com/acmarketing.es/",
   instagramHandle: "@acmarketing.es",
   creatorInstagram: "https://www.instagram.com/celesslarocca/",
@@ -26,6 +26,15 @@ export const brand = {
 
 export const waLink = (text: string) =>
   `https://wa.me/${brand.whatsapp()}?text=${encodeURIComponent(text)}`;
+
+export const mailtoLink = (subject: string, body: string) =>
+  `mailto:${brand.email()}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+/** "34613567765" -> "+34 613 56 77 65" */
+export const phoneDisplay = () => {
+  const d = brand.whatsapp();
+  return `+${d.slice(0, 2)} ${d.slice(2, 5)} ${d.slice(5, 7)} ${d.slice(7, 9)} ${d.slice(9)}`;
+};
 
 export const currency = "EUR";
 

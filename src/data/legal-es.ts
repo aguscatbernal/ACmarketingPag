@@ -18,7 +18,7 @@ export const legalEs = {
     accept: "He leído y acepto la",
     policy: "política de privacidad",
     required: "Para continuar, acepta la política de privacidad.",
-    info: "Responsable: {name}. Finalidad: responder a tu consulta y enviarte presupuesto. Tus datos no se guardan en esta web: el mensaje se envía por WhatsApp. Puedes ejercer tus derechos escribiendo a {email}.",
+    info: "Responsable: {name}. Finalidad: responder a tu consulta y enviarte presupuesto. Tus datos no se guardan en esta web: el mensaje se envía por WhatsApp o email. Puedes ejercer tus derechos escribiendo a {email}.",
   },
   banner: {
     title: "Tu privacidad importa 🍪",
@@ -100,7 +100,7 @@ export const legalEs = {
         {
           h: "2. Qué datos tratamos",
           p: [
-            "Esta web no tiene base de datos ni guarda los datos del formulario. Cuando nos escribes, el formulario solo prepara un mensaje y abre WhatsApp en tu dispositivo; eres tú quien decide enviarlo.",
+            "Esta web no tiene base de datos ni guarda los datos del formulario. Cuando nos escribes, el formulario solo prepara un mensaje y abre WhatsApp o tu programa de correo; eres tú quien decide enviarlo.",
             "Si nos contactas (por WhatsApp, email o redes sociales) trataremos los datos que nos facilites: nombre, negocio, sector, número de teléfono o email y el contenido de tu mensaje.",
           ],
         },
@@ -129,7 +129,7 @@ export const legalEs = {
         {
           h: "6. Con quién los compartimos",
           p: [
-            "No vendemos ni cedemos tus datos. Usamos proveedores que los tratan por cuenta nuestra: WhatsApp / Meta Platforms Ireland (mensajería) y el proveedor de alojamiento de la web. Algunos pueden transferir datos a EE. UU. al amparo del Marco de Privacidad de Datos UE-EE. UU. o de cláusulas contractuales tipo aprobadas por la Comisión Europea.",
+            "No vendemos ni cedemos tus datos. Usamos proveedores que los tratan por cuenta nuestra: WhatsApp / Meta Platforms Ireland (mensajería), Google Ireland (correo electrónico) y el proveedor de alojamiento de la web. Algunos pueden transferir datos a EE. UU. al amparo del Marco de Privacidad de Datos UE-EE. UU. o de cláusulas contractuales tipo aprobadas por la Comisión Europea.",
           ],
         },
         {

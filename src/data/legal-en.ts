@@ -17,7 +17,7 @@ export const legalEn: LegalContent = {
     accept: "I have read and accept the",
     policy: "privacy policy",
     required: "To continue, please accept the privacy policy.",
-    info: "Controller: {name}. Purpose: to answer your enquiry and send you a quote. Your data isn't stored on this website: the message is sent via WhatsApp. You can exercise your rights by writing to {email}.",
+    info: "Controller: {name}. Purpose: to answer your enquiry and send you a quote. Your data isn't stored on this website: the message is sent via WhatsApp or email. You can exercise your rights by writing to {email}.",
   },
   banner: {
     title: "Your privacy matters 🍪",
@@ -99,7 +99,7 @@ export const legalEn: LegalContent = {
         {
           h: "2. What data we process",
           p: [
-            "This website has no database and does not store form data. When you write to us, the form only prepares a message and opens WhatsApp on your device; you decide whether to send it.",
+            "This website has no database and does not store form data. When you write to us, the form only prepares a message and opens WhatsApp or your email app; you decide whether to send it.",
             "If you contact us (by WhatsApp, email or social media) we will process the data you give us: name, business, sector, phone number or email and the content of your message.",
           ],
         },
@@ -128,7 +128,7 @@ export const legalEn: LegalContent = {
         {
           h: "6. Who we share it with",
           p: [
-            "We don't sell or share your data. We use providers that process it on our behalf: WhatsApp / Meta Platforms Ireland (messaging) and the website hosting provider. Some may transfer data to the US under the EU-US Data Privacy Framework or standard contractual clauses approved by the European Commission.",
+            "We don't sell or share your data. We use providers that process it on our behalf: WhatsApp / Meta Platforms Ireland (messaging), Google Ireland (email) and the website hosting provider. Some may transfer data to the US under the EU-US Data Privacy Framework or standard contractual clauses approved by the European Commission.",
           ],
         },
         {
