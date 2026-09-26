@@ -3,6 +3,7 @@
 //  Words between *asterisks* are highlighted in titles.
 // ============================================================
 import type { Content } from "./es";
+import { legalEn } from "./legal-en";
 
 export const en: Content = {
   meta: {
@@ -349,4 +350,5 @@ export const en: Content = {
   footer: {
     rights: "All rights reserved",
   },
+  legal: legalEn,
 };

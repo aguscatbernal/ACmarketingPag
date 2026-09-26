@@ -134,3 +134,60 @@ export const socialDemo = {
 };
 
 export const techStack = ["React", "TypeScript", "Firebase", "Realtime", "Web + Mobile"];
+
+// ---------- DATOS LEGALES (obligatorios en España: LSSI y RGPD) ----------
+// EDITAR: rellenad con vuestros datos reales antes de publicar
+export const legalOwner = {
+  name: "[EDITAR: Nombre y apellidos o razón social]",
+  nif: "[EDITAR: NIF / CIF]",
+  address: "[EDITAR: Dirección, código postal, ciudad]",
+  domain: "acmarketing.es", // EDITAR: dominio de la web
+  updated: "2026-09-26",
+};
+
+/** Rellena {name}, {nif}, {address}, {email}, {domain} y {updated} en los textos legales. */
+export const fillLegal = (text: string) =>
+  text
+    .replaceAll("{name}", legalOwner.name)
+    .replaceAll("{nif}", legalOwner.nif)
+    .replaceAll("{address}", legalOwner.address)
+    .replaceAll("{email}", brand.email())
+    .replaceAll("{domain}", legalOwner.domain)
+    .replaceAll("{updated}", legalOwner.updated);
+
+// ---------- COOKIES OPCIONALES ----------
+// Ahora mismo la web NO usa cookies de análisis ni de publicidad, así que el
+// aviso de cookies no aparece (la ley no lo exige). Si algún día añadís
+// Google Analytics, el píxel de Meta, etc., añadidlo aquí: el aviso aparecerá solo
+// y el script se cargará únicamente si la persona acepta esa categoría.
+// Ojo: también hay que permitir su dominio en la cabecera Content-Security-Policy.
+export type CookieCategory = "analytics" | "marketing";
+
+export const optionalServices: {
+  id: string;
+  category: CookieCategory;
+  name: string;
+  provider: string;
+  load: () => void;
+}[] = [
+  // Ejemplo:
+  // {
+  //   id: "ga",
+  //   category: "analytics",
+  //   name: "Google Analytics",
+  //   provider: "Google Ireland Ltd.",
+  //   load: () => {
+  //     const s = document.createElement("script");
+  //     s.src = "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX";
+  //     s.async = true;
+  //     document.head.appendChild(s);
+  //   },
+  // },
+];
+
+// Lo que la web guarda en el navegador (técnico, exento de consentimiento)
+export const technicalStorage = [
+  { key: "ac-lang", purpose: "lang" },
+  { key: "ac-contact-sends", purpose: "antispam" },
+  { key: "ac-cookie-consent", purpose: "consent" },
+] as const;

@@ -1,9 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertCircle, Mail, Send } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from "react";
-import { brand, waLink } from "../data/site";
+import { brand, fillLegal, waLink } from "../data/site";
 import { useLang } from "../i18n";
 import { LIMITS, checkSubmission, clean, recordSend, type SpamCheck } from "../lib/antispam";
+import { legalHref } from "./LegalModal";
 import { InstagramIcon, Reveal, SectionTitle, TikTokIcon, WhatsAppIcon } from "./Shared";
 
 const confetti = ["🎉", "✨", "💚", "⭐", "🚀", "🙌"];
@@ -19,7 +20,8 @@ export function Contact() {
   const [msg, setMsg] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [sent, setSent] = useState(false);
-  const [error, setError] = useState<Exclude<SpamCheck, { ok: true }> | null>(null);
+  const [accepted, setAccepted] = useState(false);
+  const [error, setError] = useState<Exclude<SpamCheck, { ok: true }> | { ok: false; reason: "privacy" } | null>(null);
   const startedAt = useRef(Date.now());
   const sentTimer = useRef<number | undefined>(undefined);
 
@@ -47,6 +49,12 @@ export function Contact() {
         showSent();
         return;
       }
+    }
+    if (!accepted) {
+      setError({ ok: false, reason: "privacy" });
+      return;
+    }
+    if (!check.ok) {
       setError(check);
       return;
     }
@@ -71,7 +79,9 @@ export function Contact() {
       ? `${c.errors.cooldown} ${error.waitSeconds} ${c.errors.seconds}.`
       : error.reason === "honeypot"
         ? ""
-        : c.errors[error.reason];
+        : error.reason === "privacy"
+          ? t.legal.form.required
+          : c.errors[error.reason];
 
   // El email se arma al hacer clic para que no quede escrito en el HTML
   const openMail = (e: MouseEvent<HTMLAnchorElement>) => {
@@ -202,6 +212,14 @@ export function Contact() {
                   {msg.length}/{LIMITS.message}
                 </span>
               </label>
+
+              <label className="privacy-check">
+                <input type="checkbox" checked={accepted} onChange={(e) => setAccepted(e.target.checked)} />
+                <span>
+                  {t.legal.form.accept} <a href={legalHref("privacidad")}>{t.legal.form.policy}</a>
+                </span>
+              </label>
+              <p className="privacy-info">{fillLegal(t.legal.form.info)}</p>
 
               <AnimatePresence>
                 {errorText && (

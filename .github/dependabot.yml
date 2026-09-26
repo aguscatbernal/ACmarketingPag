@@ -1,0 +1,8 @@
+# Revisa cada semana si alguna librería tiene fallos de seguridad y abre un PR para actualizarla
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5

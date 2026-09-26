@@ -24,31 +24,50 @@ npm run preview      # probar la versión compilada con las cabeceras de segurid
 - El teléfono y el email van codificados. Para generar uno nuevo, en la consola del navegador:
   `btoa("34611222333".split("").reverse().join(""))`
 
-## Seguridad y anti-spam
-La web es **100 % estática**: no hay servidor, base de datos, API ni claves. No hay nada que hackear
-ni ningún endpoint al que un bot pueda mandar mensajes. El formulario solo **abre WhatsApp** con el
-texto escrito, y es la persona quien tiene que pulsar "enviar" en su propio móvil.
+## Arquitectura de seguridad
+```
+Visitante / bot ──► Cloudflare (DDoS, Bot Fight Mode, límite de peticiones)
+                        └─► Archivos estáticos (HTML, JS, CSS, fuentes) — sin servidor, sin base de datos
+Formulario ──► abre WhatsApp en el móvil de la persona (la web no envía ni guarda nada)
+```
+- **Nada que atacar**: no hay servidor, base de datos, API, login ni claves. Un bot no puede meter
+  datos, borrar nada ni mandarte mensajes a través de la web.
+- **Formulario** (`src/lib/antispam.ts`): honeypot, tiempo mínimo de 3 s, máx. 3 envíos cada 10 min,
+  validación (longitud, máx. 1 enlace, caracteres invisibles) y casilla de privacidad obligatoria.
+- **Contacto protegido**: teléfono y email codificados en el código para frenar a los recolectores.
+- **Cabeceras de seguridad** (`vercel.json` y `public/_headers`): CSP estricta (solo se ejecuta y carga
+  código de la propia web), HSTS, anti-iframe (clickjacking), nosniff, Permissions-Policy.
+- **Sin terceros**: las tipografías se sirven desde la propia web, no se llama a Google ni a nadie más.
+- **Dependencias**: `npm audit` sin vulnerabilidades y Dependabot (`.github/dependabot.yml`) avisa cada semana.
 
-Capas extra del formulario (`src/lib/antispam.ts`):
-1. **Honeypot**: campo invisible; si un bot lo rellena, se le dice "enviado" pero no se abre nada.
-2. **Tiempo mínimo**: rellenar el formulario en menos de 3 segundos se rechaza.
-3. **Límite**: máximo 3 envíos cada 10 minutos por navegador.
-4. **Validación**: longitudes máximas, máximo 1 enlace, se limpian caracteres invisibles.
+### Lo más importante fuera del código
+- **Verificación en dos pasos (2FA)** en GitHub, Cloudflare, el registrador del dominio, Instagram,
+  TikTok y WhatsApp Business. Robar una de esas cuentas hace mucho más daño que cualquier bot.
+- Si algún día el formulario guarda o envía mensajes a un servidor (Firebase, email…), la protección
+  tiene que ir en el servidor: Cloudflare Turnstile verificado en el backend, Firebase App Check, reglas
+  de Firestore estrictas y límite de peticiones por IP.
 
-Además:
-- Teléfono y email no aparecen como texto plano en el código (frena a los bots que los recolectan).
-- Cabeceras de seguridad (CSP, HSTS, anti-iframe, etc.) en `vercel.json` y `public/_headers`.
+## Legal (España)
+- Aviso legal, política de privacidad y política de cookies: `src/data/legal-es.ts` / `legal-en.ts`.
+  Se abren en ventanas con enlaces tipo `#legal/privacidad`.
+- **Rellenar los datos del titular** (nombre o razón social, NIF, dirección) en `legalOwner`, en `src/data/site.ts`.
+- Son plantillas: conviene que un gestor o abogado las revise.
+- **Cookies**: la web solo guarda datos técnicos (idioma, anti-spam, elección de cookies), exentos de
+  consentimiento, así que no muestra aviso. Si añadís Google Analytics, el píxel de Meta, etc., añadidlos en
+  `optionalServices` (`src/data/site.ts`): el aviso aparecerá solo y el script solo se cargará si la persona
+  acepta. Recordad permitir su dominio en la CSP. Alternativa sin aviso: analítica sin cookies como
+  Cloudflare Web Analytics.
 
-**Si algún día el formulario guarda o envía mensajes a un servidor** (Firebase, email…), la protección
-de verdad tiene que estar en el servidor: Cloudflare Turnstile (captcha invisible y gratis) verificado
-en el backend, Firebase App Check, reglas de Firestore que solo permitan crear documentos válidos y
-límite de peticiones por IP. Lo del navegador solo frena a los bots básicos.
-
-## Deploy gratis (recomendado: Vercel)
+## Deploy gratis (recomendado: Cloudflare Pages)
+Cloudflare Pages es gratis también para uso comercial, no tiene límite de tráfico en webs estáticas e
+incluye protección DDoS. (El plan gratis de Vercel solo permite uso personal, no comercial.)
 1. Sube el proyecto a GitHub.
-2. En vercel.com → "Add New Project" → elige el repo.
-3. Vite se detecta solo (build: `npm run build`, output: `dist`). Deploy.
-Cada `git push` vuelve a publicar la web automáticamente. `vercel.json` ya añade las cabeceras de seguridad.
+2. En dash.cloudflare.com → Workers & Pages → Create → Pages → conecta el repo.
+3. Build command: `npm run build` · Output directory: `dist`. Deploy.
+4. Añade vuestro dominio (Custom domains). Con el dominio en Cloudflare, activa en **Security**:
+   - **Bot Fight Mode** (bloquea bots conocidos).
+   - Security Level «Medium» y, si hay un ataque, el botón **Under Attack Mode**.
+   - **SSL/TLS → Full (strict)** y «Always Use HTTPS».
+Cada `git push` publica la web automáticamente. `public/_headers` ya añade las cabeceras de seguridad.
 
-Alternativas gratis: Netlify o Cloudflare Pages (usan `public/_headers`), o Firebase Hosting
-(`firebase init hosting` con public dir `dist`; las cabeceras se copian a `firebase.json`).
+Alternativa: Netlify (también lee `public/_headers`).

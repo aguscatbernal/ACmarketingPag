@@ -3,6 +3,8 @@
 //  Las palabras entre *asteriscos* se resaltan en los títulos.
 // ============================================================
 
+import { legalEs } from "./legal-es";
+
 export const es = {
   meta: {
     title: "AC Marketing | NFC, colaboraciones y redes sociales para tu negocio",
@@ -350,6 +352,7 @@ export const es = {
   footer: {
     rights: "Todos los derechos reservados",
   },
+  legal: legalEs,
 };
 
 export type Content = typeof es;

@@ -1,5 +1,6 @@
 import { MotionConfig } from "framer-motion";
 import { LangProvider } from "./i18n";
+import { ConsentProvider } from "./lib/consent";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { Marquee } from "./components/Marquee";
@@ -14,29 +15,36 @@ import { Faq } from "./components/Faq";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { ScrollProgress, WhatsAppFloat } from "./components/Extras";
+import { LegalModal } from "./components/LegalModal";
+import { CookieBanner, CookieSettings } from "./components/Cookies";
 
 export default function App() {
   return (
     <LangProvider>
-      <MotionConfig reducedMotion="user">
-        <ScrollProgress />
-        <Navbar />
-        <main>
-          <Hero />
-          <Marquee />
-          <Services />
-          <NfcDemo />
-          <Collabs />
-          <SocialManagement />
-          <RestaurantSystem />
-          <Offers />
-          <Process />
-          <Faq />
-          <Contact />
-        </main>
-        <Footer />
-        <WhatsAppFloat />
-      </MotionConfig>
+      <ConsentProvider>
+        <MotionConfig reducedMotion="user">
+          <ScrollProgress />
+          <Navbar />
+          <main>
+            <Hero />
+            <Marquee />
+            <Services />
+            <NfcDemo />
+            <Collabs />
+            <SocialManagement />
+            <RestaurantSystem />
+            <Offers />
+            <Process />
+            <Faq />
+            <Contact />
+          </main>
+          <Footer />
+          <WhatsAppFloat />
+          <LegalModal />
+          <CookieSettings />
+          <CookieBanner />
+        </MotionConfig>
+      </ConsentProvider>
     </LangProvider>
   );
 }
