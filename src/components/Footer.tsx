@@ -12,9 +12,8 @@ export function Footer() {
     <footer className="footer">
       <div className="container footer-inner">
         <div className="footer-brand">
-          <a href="#top" className="logo">
-            <span className="logo-badge">{brand.short}</span>
-            <span className="logo-text">{brand.name.replace(brand.short + " ", "")}</span>
+          <a href="#top" className="footer-logo">
+            <img src="/brand/logo-full-light.png" alt={brand.name} width="180" height="170" loading="lazy" />
           </a>
           <p>{t.meta.tagline}</p>
         </div>

@@ -104,7 +104,7 @@ export function NfcDemo() {
               </AnimatePresence>
               <NfcWaves size={34} />
               <span className="nfc-tag-label">{mode === "review" ? t.nfc.tagReview : t.nfc.tagMenu}</span>
-              <span className="nfc-tag-brand">AC</span>
+              <img className="nfc-tag-brand" src="/brand/logo-mark-light.png" alt="" />
             </div>
           </div>
 

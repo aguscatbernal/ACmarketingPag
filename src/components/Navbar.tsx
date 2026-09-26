@@ -39,8 +39,9 @@ export function Navbar() {
     >
       <div className="container nav-inner">
         <a href="#top" className="logo" onClick={() => setOpen(false)}>
-          <span className="logo-badge">{brand.short}</span>
-          <span className="logo-text">{brand.name.replace(brand.short + " ", "")}</span>
+          <img className="logo-mark" src="/brand/logo-mark.png" alt="" width="60" height="44" />
+          <span className="logo-word" aria-hidden="true">Marketing</span>
+          <span className="sr-only">{brand.name}</span>
         </a>
 
         <nav className="nav-links">

@@ -59,7 +59,9 @@ export function SocialManagement() {
             <div className="profile-head">
               <div className="profile-avatar">
                 <motion.span className="profile-ring" animate={{ rotate: 360 }} transition={{ duration: 6, repeat: Infinity, ease: "linear" }} />
-                <span className="profile-badge">{brand.short}</span>
+                <span className="profile-badge">
+                  <img src="/brand/logo-mark.png" alt={brand.name} />
+                </span>
               </div>
               <div className="profile-stats">
                 <div>
