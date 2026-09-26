@@ -169,14 +169,21 @@ export const socialDemo = {
 export const techStack = ["React", "TypeScript", "Firebase", "Realtime", "Web + Mobile"];
 
 // ---------- DATOS LEGALES (obligatorios en España: LSSI y RGPD) ----------
-// EDITAR: rellenad con vuestros datos reales antes de publicar
+// Mientras no estéis dados de alta figura el nombre comercial. Al daros de alta
+// como autónomo/a (o crear una S.L.), poned aquí el nombre y apellidos (o la
+// razón social), el NIF/NIE y la dirección fiscal: las líneas de NIF y domicilio
+// solo aparecen en el aviso legal y la privacidad cuando tienen un valor.
 export const legalOwner = {
-  name: "[EDITAR: Nombre y apellidos o razón social]",
-  nif: "[EDITAR: NIF / CIF]",
-  address: "[EDITAR: Dirección, código postal, ciudad]",
-  domain: "acmarketing.es", // EDITAR: dominio de la web
-  updated: "2026-09-26",
+  name: "AC Marketing",
+  nif: "",
+  address: "",
+  domain: "acmarketing.es", // EDITAR: dominio definitivo de la web
+  updated: "2026-09-27",
 };
+
+/** Oculta las líneas de NIF o domicilio mientras estén vacías. */
+export const legalLineVisible = (line: string) =>
+  !(line.includes("{nif}") && !legalOwner.nif) && !(line.includes("{address}") && !legalOwner.address);
 
 /** Rellena {name}, {nif}, {address}, {email}, {domain} y {updated} en los textos legales. */
 export const fillLegal = (text: string) =>

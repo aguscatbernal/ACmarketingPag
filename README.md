@@ -55,7 +55,9 @@ Formulario ──► Firestore (colección "consultas") ──► app reels_mana
 ## Legal (España)
 - Aviso legal, política de privacidad y política de cookies: `src/data/legal-es.ts` / `legal-en.ts`.
   Se abren en ventanas con enlaces tipo `#legal/privacidad`.
-- **Rellenar los datos del titular** (nombre o razón social, NIF, dirección) en `legalOwner`, en `src/data/site.ts`.
+- **Titular**: mientras no haya alta figura el nombre comercial "AC Marketing". Al darse de alta, poned
+  nombre y apellidos (o razón social), NIF/NIE y dirección en `legalOwner` (`src/data/site.ts`); las
+  líneas de NIF y domicilio aparecen solas cuando tienen valor.
 - Son plantillas: conviene que un gestor o abogado las revise.
 - **Cookies**: la web solo guarda datos técnicos (idioma, anti-spam, elección de cookies), exentos de
   consentimiento, así que no muestra aviso. Si añadís Google Analytics, el píxel de Meta, etc., añadidlos en

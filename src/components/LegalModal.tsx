@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { LegalPage } from "../data/legal-es";
-import { fillLegal, legalOwner } from "../data/site";
+import { fillLegal, legalLineVisible, legalOwner } from "../data/site";
 import { useLang } from "../i18n";
 import { Modal } from "./Modal";
 
@@ -38,7 +38,7 @@ export function LegalModal() {
           {content.sections.map((s) => (
             <section key={s.h}>
               <h3>{s.h}</h3>
-              {s.p.map((line, i) => (
+              {s.p.filter(legalLineVisible).map((line, i) => (
                 <p key={i} className={line.startsWith("• ") ? "legal-item" : undefined}>
                   {fillLegal(line)}
                 </p>
