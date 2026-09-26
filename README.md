@@ -26,19 +26,24 @@ npm run preview      # probar la versión compilada con las cabeceras de segurid
 
 ## Arquitectura de seguridad
 ```
-Visitante / bot ──► Cloudflare (DDoS, Bot Fight Mode, límite de peticiones)
-                        └─► Archivos estáticos (HTML, JS, CSS, fuentes) — sin servidor, sin base de datos
-Formulario ──► abre WhatsApp en el móvil de la persona (la web no envía ni guarda nada)
+Visitante / bot ──► Cloudflare (DDoS, Bot Fight Mode)
+                        └─► Archivos estáticos (HTML, JS, CSS, fuentes) — sin servidor propio
+Formulario ──► Firestore (colección "consultas") ──► app reels_manager, sección "Consultas"
+          └──► o WhatsApp / email, como alternativa y respaldo
 ```
-- **Nada que atacar**: no hay servidor, base de datos, API, login ni claves. Un bot no puede meter
-  datos, borrar nada ni mandarte mensajes a través de la web.
+- **Consultas a reels_manager** (`src/lib/consultas.ts`): el formulario guarda la consulta en el
+  Firestore de la app. Firebase solo se descarga al enviar. Las **reglas de Firestore**
+  (`firestore.rules` en reels_manager) solo dejan **crear** consultas con campos, largos y valores
+  válidos; nadie de fuera puede leer, editar ni borrar. Probadas con el emulador (23 casos).
 - **Formulario** (`src/lib/antispam.ts`): honeypot, tiempo mínimo de 3 s, máx. 3 envíos cada 10 min,
-  validación (longitud, máx. 1 enlace, caracteres invisibles) y casilla de privacidad obligatoria.
+  validación (longitud, WhatsApp o email válido, máx. 1 enlace) y casilla de privacidad obligatoria.
 - **Contacto protegido**: teléfono y email codificados en el código para frenar a los recolectores.
-- **Cabeceras de seguridad** (`vercel.json` y `public/_headers`): CSP estricta (solo se ejecuta y carga
-  código de la propia web), HSTS, anti-iframe (clickjacking), nosniff, Permissions-Policy.
-- **Sin terceros**: las tipografías se sirven desde la propia web, no se llama a Google ni a nadie más.
+- **Cabeceras de seguridad** (`vercel.json` y `public/_headers`): CSP estricta (solo código propio y
+  conexión a Firestore), HSTS, anti-iframe (clickjacking), nosniff, Permissions-Policy.
+- **Sin terceros al cargar**: las tipografías se sirven desde la propia web.
 - **Dependencias**: `npm audit` sin vulnerabilidades y Dependabot (`.github/dependabot.yml`) avisa cada semana.
+- **Siguiente paso recomendado**: activar Firebase App Check para que Firestore solo acepte
+  consultas que vengan de la web (frena a bots que llamen a la API directamente).
 
 ### Lo más importante fuera del código
 - **Verificación en dos pasos (2FA)** en GitHub, Cloudflare, el registrador del dominio, Instagram,

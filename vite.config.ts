@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 // Las mismas cabeceras de seguridad que en vercel.json y public/_headers, para probarlas con "npm run preview".
 // El hash sha256-47DEQ... corresponde a un <style> vacío que usa framer-motion en algunas animaciones.
 const securityHeaders = {
-  "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+  "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU='; font-src 'self'; img-src 'self' data:; connect-src 'self' https://firestore.googleapis.com; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
   "X-Content-Type-Options": "nosniff",
   "X-Frame-Options": "DENY",
   "Referrer-Policy": "strict-origin-when-cross-origin",

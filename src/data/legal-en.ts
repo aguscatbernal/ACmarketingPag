@@ -17,7 +17,7 @@ export const legalEn: LegalContent = {
     accept: "I have read and accept the",
     policy: "privacy policy",
     required: "To continue, please accept the privacy policy.",
-    info: "Controller: {name}. Purpose: to answer your enquiry and send you a quote. Your data isn't stored on this website: the message is sent via WhatsApp or email. You can exercise your rights by writing to {email}.",
+    info: "Controller: {name}. Purpose: to answer your enquiry and send you a quote. We store your enquiry in our database (Google Firebase) only for that. You can exercise your rights by writing to {email}.",
   },
   banner: {
     title: "Your privacy matters 🍪",
@@ -99,7 +99,7 @@ export const legalEn: LegalContent = {
         {
           h: "2. What data we process",
           p: [
-            "This website has no database and does not store form data. When you write to us, the form only prepares a message and opens WhatsApp or your email app; you decide whether to send it.",
+            "When you submit the form we store your enquiry (name, business, sector, services you're interested in, WhatsApp or email and message) in our Google Firebase database, which only our team can access. If you choose to send it via WhatsApp or email, the form only prepares the message and you decide whether to send it.",
             "If you contact us (by WhatsApp, email or social media) we will process the data you give us: name, business, sector, phone number or email and the content of your message.",
           ],
         },
@@ -128,7 +128,7 @@ export const legalEn: LegalContent = {
         {
           h: "6. Who we share it with",
           p: [
-            "We don't sell or share your data. We use providers that process it on our behalf: WhatsApp / Meta Platforms Ireland (messaging), Google Ireland (email) and the website hosting provider. Some may transfer data to the US under the EU-US Data Privacy Framework or standard contractual clauses approved by the European Commission.",
+            "We don't sell or share your data. We use providers that process it on our behalf: WhatsApp / Meta Platforms Ireland (messaging), Google Ireland (email and Firebase database) and the website hosting provider. Some may transfer data to the US under the EU-US Data Privacy Framework or standard contractual clauses approved by the European Commission.",
           ],
         },
         {
@@ -163,6 +163,7 @@ export const legalEn: LegalContent = {
             "• ac-contact-sends: anti-spam protection for the form. Expires after 10 minutes.",
             "• ac-cookie-consent: stores your cookie choice. Kept for 12 months.",
             "Fonts are hosted on our own server, so your IP is not sent to Google or other services when you visit.",
+            "Only if you submit the form, Google's Firebase service (which we use to receive your enquiry) may store a technical item in your browser (firebase-heartbeat-database) for it to work.",
           ],
         },
         {

@@ -1,27 +1,35 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { AlertCircle, Mail, Send } from "lucide-react";
+import { AlertCircle, Loader2, Mail, Send } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from "react";
 import { brand, fillLegal, mailtoLink, phoneDisplay, waLink } from "../data/site";
 import { useLang } from "../i18n";
-import { LIMITS, checkSubmission, clean, recordSend, type SpamCheck } from "../lib/antispam";
+import { enviarConsulta } from "../lib/consultas";
+import { LIMITS, checkSubmission, clean, isValidContact, recordSend, type SpamCheck } from "../lib/antispam";
 import { legalHref } from "./LegalModal";
 import { InstagramIcon, Reveal, SectionTitle, TikTokIcon, WhatsAppIcon } from "./Shared";
 
 const confetti = ["🎉", "✨", "💚", "⭐", "🚀", "🙌"];
 
+// app = se guarda en Firestore y aparece en reels_manager
+type Via = "app" | "wa" | "email";
+
 export function Contact() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const c = t.contact;
 
   const [name, setName] = useState("");
   const [business, setBusiness] = useState("");
   const [sector, setSector] = useState(0);
   const [picked, setPicked] = useState<number[]>([]);
+  const [contact, setContact] = useState("");
   const [msg, setMsg] = useState("");
   const [honeypot, setHoneypot] = useState("");
-  const [sent, setSent] = useState<false | "wa" | "email">(false);
+  const [sent, setSent] = useState<false | Via>(false);
+  const [sending, setSending] = useState(false);
   const [accepted, setAccepted] = useState(false);
-  const [error, setError] = useState<Exclude<SpamCheck, { ok: true }> | { ok: false; reason: "privacy" } | null>(null);
+  const [error, setError] = useState<
+    Exclude<SpamCheck, { ok: true }> | { ok: false; reason: "privacy" | "contact" | "network" } | null
+  >(null);
   const startedAt = useRef(Date.now());
   const sentTimer = useRef<number | undefined>(undefined);
 
@@ -29,18 +37,19 @@ export function Contact() {
 
   const toggle = (i: number) => setPicked((p) => (p.includes(i) ? p.filter((x) => x !== i) : [...p, i]));
 
-  const showSent = (via: "wa" | "email") => {
+  const showSent = (via: Via) => {
     setSent(via);
     sentTimer.current = window.setTimeout(() => setSent(false), 3500);
   };
 
-  const submit = (e: FormEvent, via: "wa" | "email" = "wa") => {
+  const submit = async (e: FormEvent, via: Via = "app") => {
     e.preventDefault();
-    if (sent) return;
+    if (sent || sending) return;
 
     const cleanName = clean(name, LIMITS.name);
     const cleanBusiness = clean(business, LIMITS.business);
     const cleanMsg = clean(msg, LIMITS.message + 1);
+    const cleanContact = clean(contact, LIMITS.contact);
 
     const check = checkSubmission({ honeypot, startedAt: startedAt.current, name: cleanName, message: cleanMsg });
     if (!check.ok) {
@@ -56,6 +65,39 @@ export function Contact() {
     }
     if (!check.ok) {
       setError(check);
+      return;
+    }
+    if (via === "app" && !isValidContact(cleanContact)) {
+      setError({ ok: false, reason: "contact" });
+      return;
+    }
+
+    if (via === "app") {
+      setSending(true);
+      try {
+        await enviarConsulta({
+          nombre: cleanName,
+          negocio: cleanBusiness,
+          sectorIndex: sector,
+          interesesIndex: picked,
+          contacto: cleanContact,
+          mensaje: cleanMsg,
+          idioma: lang,
+        });
+        recordSend();
+        setError(null);
+        setName("");
+        setBusiness("");
+        setContact("");
+        setMsg("");
+        setPicked([]);
+        showSent("app");
+      } catch (err) {
+        console.warn("No se pudo guardar la consulta en Firestore:", err);
+        setError({ ok: false, reason: "network" });
+      } finally {
+        setSending(false);
+      }
       return;
     }
 
@@ -169,6 +211,19 @@ export function Contact() {
               </div>
 
               <label>
+                {c.contact}
+                <input
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                  placeholder={c.contactPh}
+                  maxLength={LIMITS.contact}
+                  autoComplete="tel"
+                  inputMode="email"
+                  required
+                />
+              </label>
+
+              <label>
                 {c.sector}
                 <select value={sector} onChange={(e) => setSector(Number(e.target.value))}>
                   {c.sectors.map((r, i) => (
@@ -231,20 +286,23 @@ export function Contact() {
               </AnimatePresence>
 
               <div className="submit-wrap">
-                <div className="submit-buttons">
-                  <motion.button type="submit" className="btn btn-primary" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }} disabled={!!sent}>
-                    <Send size={18} /> {c.send}
-                  </motion.button>
-                  <motion.button
-                    type="button"
-                    className="btn btn-outline"
-                    onClick={(e) => submit(e, "email")}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.97 }}
-                    disabled={!!sent}
-                  >
-                    <Mail size={18} /> {c.sendEmail}
-                  </motion.button>
+                <motion.button
+                  type="submit"
+                  className="btn btn-primary btn-block"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  disabled={!!sent || sending}
+                >
+                  {sending ? <Loader2 size={18} className="spin" /> : <Send size={18} />} {sending ? c.sending : c.sendApp}
+                </motion.button>
+                <div className="submit-alt">
+                  <span>{c.orDirect}</span>
+                  <button type="button" onClick={(e) => submit(e, "wa")} disabled={!!sent || sending}>
+                    <WhatsAppIcon size={16} /> {c.send}
+                  </button>
+                  <button type="button" onClick={(e) => submit(e, "email")} disabled={!!sent || sending}>
+                    <Mail size={16} /> {c.sendEmail}
+                  </button>
                 </div>
                 <AnimatePresence>
                   {sent &&
@@ -270,7 +328,7 @@ export function Contact() {
               <AnimatePresence>
                 {sent && (
                   <motion.p className="sent-msg" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                    {sent === "email" ? c.sentEmail : c.sent}
+                    {sent === "app" ? c.sentApp : sent === "email" ? c.sentEmail : c.sent}
                   </motion.p>
                 )}
               </AnimatePresence>

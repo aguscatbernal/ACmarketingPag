@@ -16,7 +16,15 @@ const WINDOW_MS = 10 * 60 * 1000;
 const MAX_SENDS = 3;
 const STORAGE_KEY = "ac-contact-sends";
 
-export const LIMITS = { name: 60, business: 80, message: 800 };
+export const LIMITS = { name: 60, business: 80, contact: 80, message: 800 };
+
+/** WhatsApp (7 a 15 cifras) o email con formato válido. */
+export function isValidContact(value: string) {
+  const v = value.trim();
+  if (v.includes("@")) return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  const digits = v.replace(/\D/g, "");
+  return /^[+\d\s().-]+$/.test(v) && digits.length >= 7 && digits.length <= 15;
+}
 
 export type SpamCheck =
   | { ok: true }
