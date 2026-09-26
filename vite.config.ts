@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { seo } from "./seo.ts";
 
 // Las mismas cabeceras de seguridad que en vercel.json y public/_headers, para probarlas con "npm run preview".
 // El hash sha256-47DEQ... corresponde a un <style> vacío que usa framer-motion en algunas animaciones.
@@ -14,6 +15,6 @@ const securityHeaders = {
 };
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), seo()],
   preview: { headers: securityHeaders },
 });

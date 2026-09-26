@@ -65,6 +65,21 @@ Formulario ──► Firestore (colección "consultas") ──► app reels_mana
   acepta. Recordad permitir su dominio en la CSP. Alternativa sin aviso: analítica sin cookies como
   Cloudflare Web Analytics.
 
+## Visibilidad en Google (SEO)
+Se genera solo al compilar (`seo.ts`), a partir de los mismos datos de la web:
+- `robots.txt` y `sitemap.xml`.
+- Vista previa al compartir el link (WhatsApp, Instagram…): título, descripción e imagen `public/og-image.jpg`.
+- Datos de negocio local para Google (JSON-LD) con zona (Málaga, Costa del Sol, Madrid), redes y
+  los packs con sus precios. No incluye teléfono ni email, para no exponerlos a los bots.
+
+**Al publicar**: la dirección de la web se configura en `SITE_URL` (`seo.ts`), o con la variable de
+entorno `SITE_URL` en Cloudflare Pages. Por defecto es `https://ac-marketing.pages.dev`.
+
+Después de publicar:
+1. **Perfil de Empresa de Google** (Google Maps) con el link a la web: es lo que más trae clientes locales.
+2. **Google Search Console**: añadir la web y enviar `sitemap.xml`.
+3. Poner el link en la bio de Instagram y TikTok.
+
 ## Deploy gratis (recomendado: Cloudflare Pages)
 Cloudflare Pages es gratis también para uso comercial, no tiene límite de tráfico en webs estáticas e
 incluye protección DDoS. (El plan gratis de Vercel solo permite uso personal, no comercial.)

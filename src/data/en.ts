@@ -7,7 +7,9 @@ import { legalEn } from "./legal-en";
 
 export const en: Content = {
   meta: {
-    title: "AC Marketing | NFC, creator collaborations and social media for your business",
+    title: "AC Marketing | Marketing for businesses in Málaga: NFC, creator collaborations & social media",
+    description:
+      "NFC tags for Google reviews and table menus, creator collaborations on Instagram and TikTok, social media management, and websites and apps for restaurants in Málaga, the Costa del Sol and Madrid.",
     tagline: "Marketing people can touch, watch and recommend.",
     city: "Spain",
     madeWith: "Made with 💚 in Spain",
