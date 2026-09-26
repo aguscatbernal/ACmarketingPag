@@ -66,7 +66,7 @@ export const es = {
       nfcReviews: {
         title: "NFC para reseñas de Google",
         text: "Tu cliente acerca el móvil y deja 5 estrellas en segundos. Sin buscar, sin escribir enlaces.",
-        bullets: ["Diseño con tu logo", "QR de respaldo", "Más reseñas, mejor posicionamiento"],
+        bullets: ["Diseño con tu logo", "Se abre al instante, sin apps", "Más reseñas, mejor posicionamiento"],
       },
       nfcMenu: {
         title: "Carta en mesa con NFC",
@@ -107,7 +107,7 @@ export const es = {
     benefits: [
       "📱 Funciona con iPhone y Android",
       "🔁 Puedes cambiar el enlace cuando quieras",
-      "🔲 QR de respaldo incluido",
+      "⚡ Sin apps: se abre al instante",
       "🎨 Diseño personalizado con tu marca",
     ],
     tagReview: "¿Te ha gustado? Déjanos tu reseña",
@@ -237,22 +237,32 @@ export const es = {
     mins: "min",
     secs: "seg",
     from: "Desde",
+    separately: "por separado",
+    perTag: "/ tag",
+    save: "ahorras",
+    packUnit: "1 tag",
+    packOf: "Pack",
+    maintenance: "de mantenimiento",
+    maintenanceFrom: "+ mantenimiento desde",
+    perMonth: "/mes",
+    minMonths: "mín.",
+    months: "meses",
     want: "Lo quiero",
     waMsg: "¡Hola! Me interesa el",
     note: "Precios orientativos en euros. IVA no incluido.",
     items: {
       resenas: {
-        name: "Pack Reseñas",
+        name: "NFC Reseñas Google",
         desc: "Más reseñas en Google sin tener que pedirlas dos veces.",
-        period: "pago único",
-        features: ["5 tags NFC programados", "Diseño con tu logo", "QR de respaldo", "Instalación y prueba"],
+        period: "por tag",
+        features: ["Tag NFC con tu enlace de reseñas", "Diseño con tu logo", "Instalación y prueba", "Cambiamos el enlace si lo necesitas"],
       },
       combo: {
         name: "Combo Explosión",
         desc: "Colab + NFC: te conocen, vienen y te recomiendan.",
         period: "pago único",
         badge: "El más elegido",
-        features: ["1 reel colaborativo IG + TikTok", "3 historias de apoyo", "Pack Reseñas incluido", "Métricas del contenido"],
+        features: ["1 reel colaborativo IG + TikTok", "2 historias de apoyo", "2 tags NFC de reseñas con tu logo", "Métricas del contenido"],
       },
       colab: {
         name: "Colab Reel",
@@ -264,25 +274,25 @@ export const es = {
         name: "Pack Carta en Mesa",
         desc: "La carta al instante en cada mesa.",
         period: "hasta 10 mesas",
-        features: ["10 tags NFC de mesa", "Carta digital online", "Cambios de precios ilimitados", "QR de respaldo"],
+        features: ["10 tags NFC de mesa", "Carta digital online", "Cambios de precios ilimitados", "Instalación en cada mesa"],
       },
       redes: {
         name: "Gestión de Redes",
         desc: "Tu Instagram y TikTok, siempre activos.",
         period: "al mes",
-        features: ["12 publicaciones al mes", "4 reels editados", "Stories y comunidad", "Informe mensual"],
+        features: ["3 publicaciones por semana", "Diseño, reels y copys", "Stories y gestión de comunidad", "Informe mensual"],
       },
       sistema: {
         name: "Sistema Restaurante",
         desc: "Admin, camarero y cocina conectados.",
-        period: "al mes",
+        period: "pago único",
         features: ["App para camareros", "Pantalla de cocina en directo", "Panel admin con informes", "Soporte y actualizaciones"],
       },
       web: {
         name: "Web a medida",
         desc: "Tu negocio con una web que da ganas de visitar.",
         period: "pago único",
-        features: ["Diseño personalizado", "Animaciones y carta online", "Botón de WhatsApp", "Alojamiento gratis incluido"],
+        features: ["Diseño personalizado y animado", "Carta online editable desde la nube", "Botón de WhatsApp", "Vigilancia por si se cae + cambios"],
       },
     } as Record<string, { name: string; desc: string; period: string; badge?: string; features: string[] }>,
   },
@@ -305,8 +315,8 @@ export const es = {
         a: "Es una pegatina o placa con un chip. El cliente apoya el móvil y se abre automáticamente tu página de reseñas de Google o tu carta. No hace falta instalar ninguna app.",
       },
       {
-        q: "¿Y si el móvil no tiene NFC?",
-        a: "Todos los tags llevan un código QR de respaldo, así que cualquier móvil puede usarlo igual.",
+        q: "¿Funciona con todos los móviles?",
+        a: "Prácticamente todos los móviles de los últimos años tienen NFC: los iPhone desde el XS y casi todos los Android, donde suele venir activado de serie.",
       },
       {
         q: "¿Las colaboraciones son de pago?",
@@ -319,6 +329,10 @@ export const es = {
       {
         q: "¿Trabajáis con cualquier sector?",
         a: "Restaurantes, bares, tiendas, centros de estética, hoteles, ocio y más. Si tu negocio se puede enseñar, lo hacemos brillar.",
+      },
+      {
+        q: "¿Qué incluye el mantenimiento de la web o del sistema?",
+        a: "Vigilamos que todo funcione y lo arreglamos si algo falla, aplicamos actualizaciones de seguridad y hacemos los cambios que necesites. Además, la carta puede ir conectada a la nube para que cambies platos y precios tú mismo desde el móvil y se actualice sola.",
       },
       {
         q: "¿Cuánto se tarda en tener una web o el sistema del restaurante?",

@@ -421,6 +421,16 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.05; letter-spacing
 .offers-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; }
 .offer-card { position: relative; border-radius: var(--radius); flex: 0 1 calc((100% - 48px) / 3); }
 .offer-from { font-size: 1rem; font-weight: 700; color: var(--muted); }
+.offer-price strong { position: relative; display: flex; align-items: baseline; gap: 6px; }
+.offer-amount { display: inline-block; }
+.offer-separate { color: var(--muted); font-size: 0.9rem; }
+.offer-save { color: var(--coral); font-weight: 700; }
+.offer-maintenance { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; align-self: flex-start; background: var(--mint-100); color: var(--green-800); font-size: 0.82rem; font-weight: 700; padding: 5px 10px; border-radius: 10px; }
+.pack-picker { display: flex; gap: 4px; margin-top: 16px; padding: 4px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); align-self: flex-start; }
+.pack-picker button { position: relative; padding: 6px 14px; border-radius: 999px; font-weight: 700; font-size: 0.85rem; color: var(--muted); }
+.pack-picker button.active { color: #fff; }
+.pack-bg { position: absolute; inset: 0; border-radius: 999px; background: var(--green-700); }
+.pack-label { position: relative; }
 .offers-note { text-align: center; color: var(--muted); font-size: 0.9rem; margin-top: 28px; }
 .offer-inner {
   position: relative; height: 100%; display: flex; flex-direction: column; background: #fff;

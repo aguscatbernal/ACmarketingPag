@@ -66,7 +66,7 @@ export const en: Content = {
       nfcReviews: {
         title: "NFC for Google reviews",
         text: "Customers tap their phone and leave 5 stars in seconds. No searching, no typing links.",
-        bullets: ["Designed with your logo", "Backup QR code", "More reviews, better ranking"],
+        bullets: ["Designed with your logo", "Opens instantly, no apps", "More reviews, better ranking"],
       },
       nfcMenu: {
         title: "NFC table menu",
@@ -107,7 +107,7 @@ export const en: Content = {
     benefits: [
       "📱 Works with iPhone and Android",
       "🔁 Change the link whenever you want",
-      "🔲 Backup QR code included",
+      "⚡ No apps: opens instantly",
       "🎨 Custom design with your brand",
     ],
     tagReview: "Enjoyed it? Leave us a review",
@@ -235,22 +235,32 @@ export const en: Content = {
     mins: "min",
     secs: "sec",
     from: "From",
+    separately: "separately",
+    perTag: "/ tag",
+    save: "you save",
+    packUnit: "1 tag",
+    packOf: "Pack of",
+    maintenance: "maintenance",
+    maintenanceFrom: "+ maintenance from",
+    perMonth: "/mo",
+    minMonths: "min.",
+    months: "months",
     want: "I want it",
     waMsg: "Hi! I'm interested in the",
     note: "Indicative prices in euros. VAT not included.",
     items: {
       resenas: {
-        name: "Reviews Pack",
+        name: "NFC Google Reviews",
         desc: "More Google reviews without asking twice.",
-        period: "one-off",
-        features: ["5 programmed NFC tags", "Designed with your logo", "Backup QR code", "Setup and testing"],
+        period: "per tag",
+        features: ["NFC tag with your review link", "Designed with your logo", "Setup and testing", "We change the link if you need"],
       },
       combo: {
         name: "Boom Combo",
         desc: "Collab + NFC: they discover you, visit and recommend you.",
         period: "one-off",
         badge: "Most popular",
-        features: ["1 collab reel on IG + TikTok", "3 supporting stories", "Reviews Pack included", "Content metrics"],
+        features: ["1 collab reel on IG + TikTok", "2 supporting stories", "2 NFC review tags with your logo", "Content metrics"],
       },
       colab: {
         name: "Collab Reel",
@@ -262,25 +272,25 @@ export const en: Content = {
         name: "Table Menu Pack",
         desc: "The menu, instantly, on every table.",
         period: "up to 10 tables",
-        features: ["10 table NFC tags", "Online digital menu", "Unlimited price changes", "Backup QR code"],
+        features: ["10 table NFC tags", "Online digital menu", "Unlimited price changes", "Installed on every table"],
       },
       redes: {
         name: "Social Management",
         desc: "Your Instagram and TikTok, always active.",
         period: "per month",
-        features: ["12 posts a month", "4 edited reels", "Stories and community", "Monthly report"],
+        features: ["3 posts per week", "Design, reels and captions", "Stories and community management", "Monthly report"],
       },
       sistema: {
         name: "Restaurant System",
         desc: "Admin, waiters and kitchen connected.",
-        period: "per month",
+        period: "one-off",
         features: ["Waiter app", "Live kitchen screen", "Admin dashboard with reports", "Support and updates"],
       },
       web: {
         name: "Custom Website",
         desc: "A website that makes people want to visit.",
         period: "one-off",
-        features: ["Custom design", "Animations and online menu", "WhatsApp button", "Free hosting included"],
+        features: ["Custom animated design", "Online menu editable from the cloud", "WhatsApp button", "Uptime monitoring + changes"],
       },
     },
   },
@@ -303,8 +313,8 @@ export const en: Content = {
         a: "It's a sticker or plate with a chip. The customer taps their phone and your Google review page or menu opens automatically. No app needed.",
       },
       {
-        q: "What if the phone has no NFC?",
-        a: "Every tag includes a backup QR code, so any phone can use it.",
+        q: "Does it work with every phone?",
+        a: "Virtually every phone from recent years has NFC: iPhones from the XS onwards and almost all Android phones, where it's usually on by default.",
       },
       {
         q: "Are the collabs paid?",
@@ -317,6 +327,10 @@ export const en: Content = {
       {
         q: "Do you work with any kind of business?",
         a: "Restaurants, bars, shops, beauty salons, hotels, leisure and more. If your business can be shown, we'll make it shine.",
+      },
+      {
+        q: "What does website or system maintenance include?",
+        a: "We make sure everything works and fix it if something breaks, apply security updates and make the changes you need. Your menu can also be connected to the cloud so you can update dishes and prices yourself from your phone and it updates automatically.",
       },
       {
         q: "How long does a website or the restaurant system take?",

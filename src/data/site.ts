@@ -106,25 +106,38 @@ export const demoMenu: { id: MenuId; price: number }[] = [
 
 export type OfferId = "resenas" | "combo" | "colab" | "mesa" | "redes" | "sistema" | "web";
 
-// EDITAR: precios orientativos en euros (sin IVA)
+// Precios en euros (sin IVA)
 export const offers: {
   id: OfferId;
   emoji: string;
   price: number;
-  oldPrice?: number;
-  from?: boolean;
+  from?: boolean; // muestra "Desde"
+  separate?: number; // precio de lo mismo comprado por separado (combos)
+  packs?: { qty: number; price: number }[]; // packs por cantidad (el primero es la unidad)
+  maintenance?: { price: number; from?: boolean; minMonths?: number }; // cuota mensual de mantenimiento
   highlight?: boolean;
 }[] = [
-  { id: "resenas", emoji: "⭐", price: 49, oldPrice: 69 },
-  { id: "combo", emoji: "🚀", price: 249, oldPrice: 320, highlight: true },
-  { id: "colab", emoji: "🎬", price: 150, oldPrice: 190 },
-  { id: "mesa", emoji: "🍽️", price: 89, oldPrice: 119 },
-  { id: "redes", emoji: "📱", price: 290, oldPrice: 350 },
-  { id: "sistema", emoji: "👨‍🍳", price: 39, from: true },
-  { id: "web", emoji: "💻", price: 390, from: true },
+  {
+    id: "resenas",
+    emoji: "⭐",
+    price: 25,
+    packs: [
+      { qty: 1, price: 25 },
+      { qty: 3, price: 65 },
+      { qty: 5, price: 100 },
+    ],
+  },
+  { id: "combo", emoji: "🚀", price: 180, separate: 200, highlight: true },
+  { id: "colab", emoji: "🎬", price: 150 },
+  { id: "mesa", emoji: "🍽️", price: 89 }, // EDITAR: confirmar precio de la carta en mesa
+  { id: "redes", emoji: "📱", price: 350 },
+  { id: "sistema", emoji: "👨‍🍳", price: 220, maintenance: { price: 50, minMonths: 3 } },
+  { id: "web", emoji: "💻", price: 390, from: true, maintenance: { price: 50, from: true } },
 ];
 
-export const promoActive = true;
+// Banner de promoción con cuenta atrás. Activadlo solo con una promo real
+// (en España el precio tachado tiene que ser el precio real anterior).
+export const promoActive = false;
 
 // Gestión de redes: perfil de ejemplo para la demo
 export const socialDemo = {
