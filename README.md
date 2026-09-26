@@ -73,7 +73,7 @@ Se genera solo al compilar (`seo.ts`), a partir de los mismos datos de la web:
   los packs con sus precios. No incluye teléfono ni email, para no exponerlos a los bots.
 
 **Al publicar**: la dirección de la web se configura en `SITE_URL` (`seo.ts`), o con la variable de
-entorno `SITE_URL` en Cloudflare Pages. Por defecto es `https://ac-marketing.pages.dev`.
+entorno `SITE_URL` en Cloudflare Pages. Ahora es `https://ac-marketing-malaga.pages.dev`.
 
 Después de publicar:
 1. **Perfil de Empresa de Google** (Google Maps) con el link a la web: es lo que más trae clientes locales.

@@ -12,7 +12,7 @@ import type { Plugin } from "vite";
 import { es } from "./src/data/es.ts";
 import { brand, offers } from "./src/data/site.ts";
 
-export const SITE_URL = (process.env.SITE_URL ?? "https://ac-marketing.pages.dev").replace(/\/$/, "");
+export const SITE_URL = (process.env.SITE_URL ?? "https://ac-marketing-malaga.pages.dev").replace(/\/$/, "");
 
 const escapeHtml = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
