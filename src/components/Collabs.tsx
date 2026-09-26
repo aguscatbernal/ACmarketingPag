@@ -5,7 +5,7 @@ import { brand, creatorStats, reelCats, reels, waLink, type ReelCat } from "../d
 import { useLang } from "../i18n";
 import { Counter, InstagramIcon, Reveal, SectionTitle, TikTokIcon, ease } from "./Shared";
 
-const creatorName = "Cele La Rocca"; // EDITAR si el nombre es otro
+const creatorName = "Celeste Larocca";
 
 function Avatar() {
   const [failed, setFailed] = useState(false);
