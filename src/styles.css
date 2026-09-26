@@ -338,13 +338,17 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.05; letter-spacing
 .chip.active { color: var(--green-950); border-color: transparent; }
 .chip-bg { position: absolute; inset: 0; border-radius: 999px; background: var(--mint-300); }
 .chip-label { position: relative; }
-.reels-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.reels-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; }
+.reels-grid > * { flex: 0 0 calc((100% - 4 * 18px) / 5); }
 .reel-card {
   position: relative; aspect-ratio: 9 / 14; border-radius: var(--radius); overflow: hidden;
   display: flex; flex-direction: column; padding: 14px; color: #fff; box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
 }
 .reel-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.65)); }
-.reel-cat { position: relative; z-index: 1; align-self: flex-start; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(6px); padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+.reel-card-top { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.reel-platform { width: 30px; height: 30px; border-radius: 50%; background: rgba(0, 0, 0, 0.35); backdrop-filter: blur(6px); display: grid; place-items: center; flex-shrink: 0; }
+.reel-watch { margin-top: 4px; font-weight: 700; opacity: 1 !important; }
+.reel-cat { position: relative; z-index: 1; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(6px); padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
 .reel-card-emoji { position: absolute; top: 28%; left: 50%; margin-left: -2.2rem; font-size: 4.4rem; filter: drop-shadow(0 14px 14px rgba(0, 0, 0, 0.3)); }
 .reel-card-play { position: absolute; top: 50%; left: 50%; margin: 16px 0 0 -24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(6px); display: grid; place-items: center; z-index: 1; }
 .reel-card-info { position: relative; z-index: 1; margin-top: auto; }
@@ -625,7 +629,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.05; letter-spacing
 
 @media (max-width: 1080px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
-  .reels-grid { grid-template-columns: repeat(3, 1fr); }
+  .reels-grid > * { flex-basis: calc((100% - 2 * 18px) / 3); }
   .offer-card { flex-basis: calc((100% - 24px) / 2); }
 }
 
@@ -661,7 +665,8 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.05; letter-spacing
   .float-card .bob { padding: 10px 12px; }
   .services-grid { grid-template-columns: 1fr; }
   .offer-card { flex-basis: 100%; }
-  .reels-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .reels-grid { gap: 12px; }
+  .reels-grid > * { flex-basis: calc((100% - 12px) / 2); }
   .reel-card-emoji { font-size: 3.2rem; margin-left: -1.6rem; }
   .nfc-benefits { grid-template-columns: 1fr; }
   .segmented button { padding: 10px 14px; font-size: 0.88rem; }

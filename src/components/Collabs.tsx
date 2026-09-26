@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, Eye, Play } from "lucide-react";
+import { ArrowUpRight, Check, MapPin, Play } from "lucide-react";
 import { useState } from "react";
 import { brand, creatorStats, reelCats, reels, waLink, type ReelCat } from "../data/site";
 import { useLang } from "../i18n";
@@ -96,28 +96,41 @@ export function Collabs() {
               <motion.a
                 layout
                 key={r.id}
-                href={r.url ?? brand.creatorInstagram}
+                href={r.url}
                 target="_blank"
                 rel="noreferrer"
                 className="reel-card"
-                style={{ background: `linear-gradient(160deg, ${r.colors[0]}, ${r.colors[1]})` }}
+                style={{
+                  background: r.cover
+                    ? `center / cover no-repeat url(${r.cover})`
+                    : `linear-gradient(160deg, ${r.colors[0]}, ${r.colors[1]})`,
+                }}
+                aria-label={`${c.reelTitles[r.id]} · ${c.watchOn} ${r.platform === "tiktok" ? "TikTok" : "Instagram"}`}
                 initial={{ opacity: 0, scale: 0.8, y: 30 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.4, ease }}
                 whileHover="hover"
               >
-                <span className="reel-cat">{c.cats[r.cat]}</span>
-                <motion.span className="reel-card-emoji" variants={{ hover: { scale: 1.25, rotate: -8 } }}>
-                  {r.emoji}
-                </motion.span>
+                <div className="reel-card-top">
+                  <span className="reel-cat">{c.cats[r.cat]}</span>
+                  <span className="reel-platform">{r.platform === "tiktok" ? <TikTokIcon size={16} /> : <InstagramIcon size={16} />}</span>
+                </div>
+                {!r.cover && (
+                  <motion.span className="reel-card-emoji" variants={{ hover: { scale: 1.25, rotate: -8 } }}>
+                    {r.emoji}
+                  </motion.span>
+                )}
                 <motion.span className="reel-card-play" initial={{ scale: 0.8, opacity: 0.85 }} variants={{ hover: { scale: 1.1, opacity: 1 } }}>
                   <Play size={22} fill="currentColor" />
                 </motion.span>
                 <div className="reel-card-info">
                   <strong>{c.reelTitles[r.id]}</strong>
                   <span>
-                    <Eye size={14} /> {r.views} {c.views}
+                    <MapPin size={14} /> {r.place}
+                  </span>
+                  <span className="reel-watch">
+                    {c.watchOn} {r.platform === "tiktok" ? "TikTok" : "Instagram"} <ArrowUpRight size={14} />
                   </span>
                 </div>
               </motion.a>

@@ -58,26 +58,31 @@ export const services: {
   { id: "web", icon: "web", color: "blue", href: "#ofertas" },
 ];
 
-export type ReelCat = "food" | "bars" | "shops" | "beauty" | "fun" | "hotels";
-export const reelCats: ReelCat[] = ["food", "bars", "shops", "beauty", "fun", "hotels"];
+export type ReelCat = "food" | "hotels" | "fashion" | "brands" | "fun";
+export const reelCats: ReelCat[] = ["food", "hotels", "fashion", "brands", "fun"];
 
-// EDITAR: reemplazar por colaboraciones reales (url = link al reel)
+// Colaboraciones reales de Cele. Para añadir una: copia una línea, cambia el enlace
+// y añade su título en es.ts y en.ts (collabs.reelTitles, con el mismo id).
+// Portada opcional: guarda la imagen en /public/reels/ y pon cover: "/reels/nombre.jpg"
 export const reels: {
   id: string;
   cat: ReelCat;
-  views: string;
+  platform: "instagram" | "tiktok";
+  url: string;
+  place: string;
   emoji: string;
   colors: [string, string];
-  url?: string;
+  cover?: string;
 }[] = [
-  { id: "hotel", cat: "hotels", views: "48K", emoji: "🏨", colors: ["#00695c", "#4fd1b5"] },
-  { id: "foodIntro", cat: "food", views: "120K", emoji: "🥘", colors: ["#ff7a6b", "#ffc94d"] },
-  { id: "drink", cat: "bars", views: "67K", emoji: "🍹", colors: ["#6c4cf1", "#ff7ac6"] },
-  { id: "beauty", cat: "beauty", views: "35K", emoji: "💅", colors: ["#ff9ec7", "#ffd6e7"] },
-  { id: "outfit", cat: "shops", views: "52K", emoji: "🛍️", colors: ["#1f2937", "#00a88f"] },
-  { id: "bowling", cat: "fun", views: "88K", emoji: "🎳", colors: ["#0ea5e9", "#6ee7b7"] },
-  { id: "breakfast", cat: "hotels", views: "29K", emoji: "🥐", colors: ["#f59e0b", "#fde68a"] },
-  { id: "burger", cat: "food", views: "210K", emoji: "🍔", colors: ["#dc2626", "#fb923c"] },
+  { id: "pizza", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/Dcy4jeyI1UZ/", place: "Veridian Pizza · Málaga", emoji: "🍕", colors: ["#ff7a6b", "#ffc94d"] },
+  { id: "museum", cat: "fun", platform: "instagram", url: "https://www.instagram.com/p/DboZ7w5ITS2/", place: "Museum of Senses · Madrid", emoji: "🤯", colors: ["#6c4cf1", "#ff7ac6"] },
+  { id: "spa", cat: "hotels", platform: "instagram", url: "https://www.instagram.com/p/DYm0aFno5Xe/", place: "Guinda Wellness Spa · Mijas", emoji: "🕯️", colors: ["#00564c", "#8ee8d2"] },
+  { id: "brunch", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/Dbd2iIwIAdQ/", place: "Billy Brunch · Madrid", emoji: "🥞", colors: ["#f59e0b", "#fde68a"] },
+  { id: "loreal", cat: "brands", platform: "tiktok", url: "https://www.tiktok.com/@celelarocca/video/7681676956655439126", place: "L'Oréal Professionnel", emoji: "💇‍♀️", colors: ["#1f2937", "#d4a373"] },
+  { id: "kebab", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/Dc_uqGwJ4i6/", place: "Berliner Bros Döner · Marbella", emoji: "🥙", colors: ["#dc2626", "#fb923c"] },
+  { id: "shoes", cat: "fashion", platform: "instagram", url: "https://www.instagram.com/p/DUJLJw5CDoA/", place: "Timbos · Málaga", emoji: "👠", colors: ["#ff9ec7", "#ffd6e7"] },
+  { id: "icecream", cat: "food", platform: "instagram", url: "https://www.instagram.com/p/DdcE6hZoDc0/", place: "Arkyn Ice Cream", emoji: "🍦", colors: ["#0ea5e9", "#c4b5fd"] },
+  { id: "canva", cat: "brands", platform: "tiktok", url: "https://www.tiktok.com/@celelarocca/video/7578842410382380310", place: "Canva", emoji: "🎨", colors: ["#00c4cc", "#7d2ae8"] },
 ];
 
 // Carta de ejemplo para las demos (precios en euros)
