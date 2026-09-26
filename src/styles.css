@@ -94,13 +94,6 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.05; letter-spacing
 }
 .nav-inner { display: flex; align-items: center; gap: 28px; }
 .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; }
-.logo-badge {
-  display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px;
-  background: var(--green-700); color: var(--mint-200); font-size: 1rem; letter-spacing: 0;
-  box-shadow: 0 6px 16px -6px rgba(0, 107, 94, 0.7);
-  transition: transform 0.4s;
-}
-.logo:hover .logo-badge { transform: rotate(-10deg) scale(1.08); }
 .logo-mark { height: 3rem; width: auto; transition: transform 0.4s; }
 .logo:hover .logo-mark { transform: rotate(-4deg) scale(1.06); }
 .logo-word { font-family: var(--font); font-weight: 400; font-size: 0.82rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--green-800); margin-left: -2px; }
