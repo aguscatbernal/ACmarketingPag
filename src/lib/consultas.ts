@@ -24,7 +24,7 @@ export type NuevaConsulta = {
   nombre: string;
   negocio: string;
   sectorIndex: number;
-  interesesIndex: number[];
+  intereses: string[]; // etiquetas en español (ver interestLabelEs)
   contacto: string;
   mensaje: string;
   idioma: "es" | "en";
@@ -43,7 +43,7 @@ export async function enviarConsulta(c: NuevaConsulta) {
     nombre: c.nombre,
     negocio: c.negocio,
     sector: es.contact.sectors[c.sectorIndex],
-    intereses: c.interesesIndex.map((i) => es.contact.services[i]),
+    intereses: c.intereses,
     contacto: c.contacto,
     mensaje: c.mensaje,
     idioma: c.idioma,

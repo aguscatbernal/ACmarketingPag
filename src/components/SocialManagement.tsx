@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
-import { CalendarClock, TrendingUp } from "lucide-react";
-import { brand, socialDemo, waLink } from "../data/site";
+import { CalendarClock, Send, TrendingUp } from "lucide-react";
+import { brand, socialDemo } from "../data/site";
 import { useLang } from "../i18n";
-import { Counter, InstagramIcon, Reveal, SectionTitle, WhatsAppIcon, ease } from "./Shared";
+import { selectInterest } from "../lib/interests";
+import { Counter, InstagramIcon, Reveal, SectionTitle, ease } from "./Shared";
 
 function growthPath(points: number[], w: number, h: number) {
   const max = Math.max(...points);
@@ -45,9 +46,9 @@ export function SocialManagement() {
           </div>
 
           <Reveal className="social-ctas" delay={0.2}>
-            <a className="btn btn-primary" href={waLink(s.waMsg)} target="_blank" rel="noreferrer">
-              <WhatsAppIcon size={18} /> {s.ctaWa}
-            </a>
+            <button type="button" className="btn btn-primary" onClick={() => selectInterest({ id: "redes" })}>
+              <Send size={18} /> {s.ctaWa}
+            </button>
             <a className="btn btn-ghost" href={brand.instagram} target="_blank" rel="noreferrer">
               <InstagramIcon size={18} /> {s.cta}
             </a>

@@ -1,9 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertCircle, Check, Copy, Loader2, Mail, Send } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from "react";
-import { brand, fillLegal, mailtoLink, phoneDisplay, waLink } from "../data/site";
+import { brand, fillLegal, mailtoLink, offers, phoneDisplay, waLink, type OfferId } from "../data/site";
 import { useLang } from "../i18n";
 import { enviarConsulta } from "../lib/consultas";
+import { INTEREST_EVENT, interestLabel, interestLabelEs, packLabel, type Interest } from "../lib/interests";
 import { LIMITS, checkSubmission, clean, isValidContact, recordSend, type SpamCheck } from "../lib/antispam";
 import { legalHref } from "./LegalModal";
 import { InstagramIcon, Reveal, SectionTitle, TikTokIcon, WhatsAppIcon } from "./Shared";
@@ -14,13 +15,13 @@ const confetti = ["🎉", "✨", "💚", "⭐", "🚀", "🙌"];
 type Via = "app" | "wa" | "email";
 
 export function Contact() {
-  const { t, lang } = useLang();
+  const { t, lang, money } = useLang();
   const c = t.contact;
 
   const [name, setName] = useState("");
   const [business, setBusiness] = useState("");
   const [sector, setSector] = useState(0);
-  const [picked, setPicked] = useState<number[]>([]);
+  const [picked, setPicked] = useState<Interest[]>([]);
   const [contact, setContact] = useState("");
   const [msg, setMsg] = useState("");
   const [honeypot, setHoneypot] = useState("");
@@ -55,7 +56,22 @@ export function Contact() {
     }
   };
 
-  const toggle = (i: number) => setPicked((p) => (p.includes(i) ? p.filter((x) => x !== i) : [...p, i]));
+  const isPicked = (id: Interest["id"]) => picked.some((p) => p.id === id);
+  const toggle = (id: Interest["id"]) => {
+    const firstPack = offers.find((o) => o.id === id)?.packs?.[0].qty;
+    setPicked((p) => (p.some((x) => x.id === id) ? p.filter((x) => x.id !== id) : [...p, { id, qty: firstPack }]));
+  };
+  const setQty = (id: OfferId, qty: number) => setPicked((p) => p.map((x) => (x.id === id ? { ...x, qty } : x)));
+
+  // "Lo quiero" en una oferta (u otros botones de la web) marca ese pack aquí
+  useEffect(() => {
+    const onInterest = (e: Event) => {
+      const interest = (e as CustomEvent<Interest>).detail;
+      setPicked((p) => [...p.filter((x) => x.id !== interest.id), interest]);
+    };
+    window.addEventListener(INTEREST_EVENT, onInterest);
+    return () => window.removeEventListener(INTEREST_EVENT, onInterest);
+  }, []);
 
   const showSent = (via: Via) => {
     setSent(via);
@@ -99,7 +115,7 @@ export function Contact() {
           nombre: cleanName,
           negocio: cleanBusiness,
           sectorIndex: sector,
-          interesesIndex: picked,
+          intereses: picked.map(interestLabelEs),
           contacto: cleanContact,
           mensaje: cleanMsg,
           idioma: lang,
@@ -123,7 +139,7 @@ export function Contact() {
 
     const text = [
       `${c.hello} ${cleanName}${cleanBusiness ? ` ${c.from} ${cleanBusiness}` : ""} (${c.sectors[sector]}).`,
-      picked.length ? `${c.interested} ${picked.map((i) => c.services[i]).join(", ")}.` : "",
+      picked.length ? `${c.interested} ${picked.map((i) => interestLabel(t, i)).join(", ")}.` : "",
       cleanMsg,
     ]
       .filter(Boolean)
@@ -268,23 +284,53 @@ export function Contact() {
 
               <div className="form-label">{c.interest}</div>
               <div className="form-chips">
-                {c.services.map((s, i) => {
-                  const on = picked.includes(i);
+                {offers.map((offer) => {
+                  const on = isPicked(offer.id);
+                  const chosen = picked.find((p) => p.id === offer.id);
+                  const pack = offer.packs?.find((pk) => pk.qty === chosen?.qty);
+                  const price = money(pack?.price ?? offer.price);
+                  const priceText = `${offer.from ? `${t.offers.from.toLowerCase()} ` : ""}${price}${offer.monthly ? t.offers.perMonth : ""}`;
                   return (
-                    <motion.button
-                      type="button"
-                      key={s}
-                      className={`form-chip${on ? " on" : ""}`}
-                      onClick={() => toggle(i)}
-                      whileTap={{ scale: 0.9 }}
-                      animate={on ? { scale: [1, 1.12, 1] } : { scale: 1 }}
-                      aria-pressed={on}
-                    >
-                      {on ? "✓ " : "+ "}
-                      {s}
-                    </motion.button>
+                    <span key={offer.id} className={`form-chip-group${on ? " on" : ""}`}>
+                      <motion.button
+                        type="button"
+                        className={`form-chip${on ? " on" : ""}`}
+                        onClick={() => toggle(offer.id)}
+                        whileTap={{ scale: 0.9 }}
+                        animate={on ? { scale: [1, 1.08, 1] } : { scale: 1 }}
+                        aria-pressed={on}
+                      >
+                        {on ? "✓ " : "+ "}
+                        {offer.emoji} {t.offers.items[offer.id].name} <span className="chip-price">{priceText}</span>
+                      </motion.button>
+                      {on && offer.packs && (
+                        <span className="chip-packs" role="group" aria-label={c.pack}>
+                          {offer.packs.map((pk) => (
+                            <button
+                              type="button"
+                              key={pk.qty}
+                              className={chosen?.qty === pk.qty ? "active" : ""}
+                              onClick={() => setQty(offer.id, pk.qty)}
+                              aria-pressed={chosen?.qty === pk.qty}
+                            >
+                              {packLabel(t.offers, pk.qty)}
+                            </button>
+                          ))}
+                        </span>
+                      )}
+                    </span>
                   );
                 })}
+                <motion.button
+                  type="button"
+                  className={`form-chip${isPicked("unsure") ? " on" : ""}`}
+                  onClick={() => toggle("unsure")}
+                  whileTap={{ scale: 0.9 }}
+                  aria-pressed={isPicked("unsure")}
+                >
+                  {isPicked("unsure") ? "✓ " : "? "}
+                  {c.unsure}
+                </motion.button>
               </div>
 
               <label>

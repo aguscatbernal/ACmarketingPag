@@ -1,8 +1,9 @@
 import { AnimatePresence, LayoutGroup, motion, useInView } from "framer-motion";
 import { ChefHat, ClipboardList, BellRing } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { demoMenu, techStack, waLink, type MenuId } from "../data/site";
+import { demoMenu, techStack, type MenuId } from "../data/site";
 import { useLang } from "../i18n";
+import { selectInterest } from "../lib/interests";
 import { Reveal, SectionTitle, ease } from "./Shared";
 
 type Order = {
@@ -178,9 +179,9 @@ export function RestaurantSystem() {
               {t}
             </motion.span>
           ))}
-          <a className="btn btn-primary btn-sm" href={waLink(sys.waMsg)} target="_blank" rel="noreferrer">
+          <button type="button" className="btn btn-primary btn-sm" onClick={() => selectInterest({ id: "sistema" })}>
             {sys.cta}
-          </a>
+          </button>
         </Reveal>
       </div>
     </section>

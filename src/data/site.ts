@@ -124,6 +124,7 @@ export const offers: {
   separate?: number; // precio de lo mismo comprado por separado (combos)
   packs?: { qty: number; price: number }[]; // packs por cantidad (el primero es la unidad)
   maintenance?: { price: number; from?: boolean; minMonths?: number }; // cuota mensual de mantenimiento
+  monthly?: boolean; // el precio es mensual
   highlight?: boolean;
 }[] = [
   {
@@ -139,7 +140,7 @@ export const offers: {
   { id: "combo", emoji: "🚀", price: 180, separate: 200, highlight: true },
   { id: "colab", emoji: "🎬", price: 150 },
   { id: "mesa", emoji: "🍽️", price: 90 },
-  { id: "redes", emoji: "📱", price: 350 },
+  { id: "redes", emoji: "📱", price: 350, monthly: true },
   { id: "sistema", emoji: "👨‍🍳", price: 220, maintenance: { price: 50, minMonths: 3 } },
   { id: "web", emoji: "💻", price: 390, from: true, maintenance: { price: 50, from: true } },
 ];

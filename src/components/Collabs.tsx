@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Check, MapPin, Play } from "lucide-react";
 import { useState } from "react";
-import { brand, creatorStats, reelCats, reels, waLink, type ReelCat } from "../data/site";
+import { brand, creatorStats, reelCats, reels, type ReelCat } from "../data/site";
 import { useLang } from "../i18n";
+import { selectInterest } from "../lib/interests";
 import { Counter, InstagramIcon, Reveal, SectionTitle, TikTokIcon, ease } from "./Shared";
 
 const creatorName = "Celeste Larocca";
@@ -75,9 +76,9 @@ export function Collabs() {
                 </motion.li>
               ))}
             </ul>
-            <a className="btn btn-light" href={waLink(c.waMsg)} target="_blank" rel="noreferrer">
+            <button type="button" className="btn btn-light" onClick={() => selectInterest({ id: "colab" })}>
               {c.cta}
-            </a>
+            </button>
           </Reveal>
         </div>
 

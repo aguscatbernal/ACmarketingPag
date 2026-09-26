@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Sparkles, Wrench } from "lucide-react";
 import { useEffect, useState } from "react";
-import { offers, promoActive, waLink } from "../data/site";
+import { offers, promoActive } from "../data/site";
 import { useLang } from "../i18n";
+import { packLabel as packName, selectInterest } from "../lib/interests";
 import { Reveal, SectionTitle, ease } from "./Shared";
 
 type Offer = (typeof offers)[number];
@@ -71,8 +72,7 @@ function OfferCard({ offer, index }: { offer: Offer; index: number }) {
   const price = pack ? pack.price : offer.price;
   const unitPrice = offer.packs?.[0].price ?? offer.price;
   const saving = pack ? unitPrice * pack.qty - pack.price : 0;
-  const packLabel = (qty: number) => (qty === 1 ? o.packUnit : `${o.packOf} ${qty}`);
-  const waName = pack && pack.qty > 1 ? `${copy.name} (${packLabel(pack.qty)})` : copy.name;
+  const packLabel = (qty: number) => packName(o, qty);
 
   return (
     <motion.div
@@ -157,14 +157,13 @@ function OfferCard({ offer, index }: { offer: Offer; index: number }) {
             </li>
           ))}
         </ul>
-        <a
+        <button
+          type="button"
           className={`btn ${offer.highlight ? "btn-primary" : "btn-outline"} btn-block`}
-          href={waLink(`${o.waMsg} ${waName} ${offer.emoji}`)}
-          target="_blank"
-          rel="noreferrer"
+          onClick={() => selectInterest({ id: offer.id, qty: pack?.qty })}
         >
           {o.want}
-        </a>
+        </button>
       </div>
     </motion.div>
   );
