@@ -7,7 +7,7 @@ import { legalEn } from "./legal-en";
 
 export const en: Content = {
   meta: {
-    title: "AC Marketing | NFC, creator collabs and social media for your business",
+    title: "AC Marketing | NFC, creator collaborations and social media for your business",
     tagline: "Marketing people can touch, watch and recommend.",
     city: "Spain",
     madeWith: "Made with 💚 in Spain",
@@ -15,7 +15,7 @@ export const en: Content = {
   nav: {
     servicios: "Services",
     nfc: "NFC",
-    colabs: "Collabs",
+    colabs: "Collaborations",
     redes: "Social",
     sistemas: "Web & Apps",
     ofertas: "Offers",
@@ -30,14 +30,14 @@ export const en: Content = {
     before: "Make your",
     after: "the one everyone recommends",
     words: ["restaurant", "bar", "shop", "hotel", "café", "business"],
-    sub: "NFC tags for Google reviews and table menus, Instagram & TikTok collabs, social media management and apps to run your restaurant. All in one place.",
+    sub: "NFC tags for Google reviews and table menus, Instagram & TikTok collaborations, social media management and apps to run your restaurant. All in one place.",
     ctaOffers: "See offers",
     ctaWa: "Message us",
     waMsg: "Hi! I'd like to know more about your services 🙌",
-    stats: { collabs: "collabs", views: "views", tags: "NFC tags installed" },
+    stats: { collabs: "collaborations", views: "views", tags: "NFC tags installed" },
     follow: "Follow",
     reelCaption: "The biggest burger in town 🤯",
-    reelTags: "#collab #foodie",
+    reelTags: "#collaboration #foodie",
     cardReviewTitle: "4.9 on Google",
     cardReviewSub: "+86 reviews this month",
     cardNfcTitle: "NFC tap",
@@ -74,7 +74,7 @@ export const en: Content = {
         bullets: ["Change prices instantly", "Photos of every dish", "Perfect for bars and restaurants"],
       },
       collabs: {
-        title: "Paid creator collabs",
+        title: "Paid creator collaborations",
         text: "Reels and TikToks that show your business in a real, fun way people love to share.",
         bullets: ["Script, filming and editing", "Posted on IG + TikTok", "For any kind of business"],
       },
@@ -133,12 +133,12 @@ export const en: Content = {
     paella: "Paella (portion)",
   },
   collabs: {
-    eyebrow: "Paid collabs",
+    eyebrow: "Paid collaborations",
     title: "Content people *watch till the end*",
     subtitle: "Real reels and TikToks for restaurants, spas and beauty salons, shops, brands and leisure in Málaga, the Costa del Sol and Madrid.",
     bio: "Argentinian content creator based in Málaga 🩵 I show places, food and experiences as if you were right there.",
-    stats: { collabs: "collabs", views: "views", engagement: "engagement" },
-    includesTitle: "What's in a collab?",
+    stats: { collabs: "collaborations", views: "views", engagement: "engagement" },
+    includesTitle: "What's in a collaboration?",
     includes: [
       "Idea and script tailored to your business",
       "Filming at your venue",
@@ -147,8 +147,8 @@ export const en: Content = {
       "Supporting stories",
       "We share the metrics",
     ],
-    cta: "I want a collab 🎬",
-    waMsg: "Hi! I'd like a collab for my business 🎬",
+    cta: "I want a collaboration 🎬",
+    waMsg: "Hi! I'd like a collaboration for my business 🎬",
     all: "All",
     cats: {
       food: "Food & drink",
@@ -186,7 +186,7 @@ export const en: Content = {
       { emoji: "✍️", title: "Copy & hashtags", text: "Captions that connect and get you seen." },
       { emoji: "💬", title: "Community", text: "We answer comments and DMs." },
       { emoji: "📊", title: "Monthly report", text: "What worked, what didn't and what's next." },
-      { emoji: "🤝", title: "Collabs included", text: "We connect your brand with creators." },
+      { emoji: "🤝", title: "Collaborations included", text: "We connect your brand with creators." },
     ],
     cta: "See our Instagram",
     ctaWa: "Manage my socials",
@@ -197,7 +197,7 @@ export const en: Content = {
     growthTitle: "Growth",
     growthSub: "last 12 months",
     newFollowers: "new followers",
-    bio: "Marketing for local businesses 💚\nNFC · Collabs · Social · Web",
+    bio: "Marketing for local businesses 💚\nNFC · Collaborations · Social · Web",
     scheduled: "Scheduled",
     scheduledText: "Reel · Friday 7 pm",
   },
@@ -246,7 +246,7 @@ export const en: Content = {
     minMonths: "min.",
     months: "months",
     want: "I want it",
-    waMsg: "Hi! I'm interested in the",
+    waMsg: "Hi! I'm interested in:",
     note: "Indicative prices in euros. VAT not included.",
     items: {
       resenas: {
@@ -257,15 +257,15 @@ export const en: Content = {
       },
       combo: {
         name: "Boom Combo",
-        desc: "Collab + NFC: they discover you, visit and recommend you.",
+        desc: "Collaboration + NFC: they discover you, visit and recommend you.",
         period: "one-off",
         badge: "Most popular",
-        features: ["1 collab reel on IG + TikTok", "2 supporting stories", "2 NFC review tags with your logo", "Content metrics"],
+        features: ["1 collaboration reel on IG + TikTok", "2 supporting stories", "2 NFC review tags with your logo", "Content metrics"],
       },
       colab: {
-        name: "Collab Reel",
+        name: "Collaboration",
         desc: "Content people watch till the end.",
-        period: "per collab",
+        period: "per collaboration",
         features: ["Script + filming + editing", "Posted on IG and TikTok", "2 stories", "The video is yours to reuse"],
       },
       mesa: {
@@ -317,8 +317,8 @@ export const en: Content = {
         a: "Virtually every phone from recent years has NFC: iPhones from the XS onwards and almost all Android phones, where it's usually on by default.",
       },
       {
-        q: "Are the collabs paid?",
-        a: "Yes. Every collab includes the idea, filming, editing and posting on Instagram and TikTok. There are packs for different needs.",
+        q: "Are the collaborations paid?",
+        a: "Yes. Every collaboration includes the idea, filming, editing and posting on Instagram and TikTok. There are packs for different needs.",
       },
       {
         q: "What does social media management include?",
@@ -354,7 +354,7 @@ export const en: Content = {
     sector: "Sector",
     sectors: ["Restaurant", "Bar", "Shop", "Beauty", "Leisure", "Hotel", "Other"],
     interest: "What are you interested in?",
-    services: ["NFC reviews", "NFC menu", "Collab", "Social media", "Website", "Restaurant system"],
+    services: ["NFC reviews", "NFC menu", "Collaboration", "Social media", "Website", "Restaurant system"],
     message: "Message",
     messagePh: "Tell us a bit about what you need…",
     sendApp: "Send enquiry",

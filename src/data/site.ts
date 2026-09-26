@@ -138,7 +138,7 @@ export const offers: {
   },
   { id: "combo", emoji: "🚀", price: 180, separate: 200, highlight: true },
   { id: "colab", emoji: "🎬", price: 150 },
-  { id: "mesa", emoji: "🍽️", price: 89 }, // EDITAR: confirmar precio de la carta en mesa
+  { id: "mesa", emoji: "🍽️", price: 90 },
   { id: "redes", emoji: "📱", price: 350 },
   { id: "sistema", emoji: "👨‍🍳", price: 220, maintenance: { price: 50, minMonths: 3 } },
   { id: "web", emoji: "💻", price: 390, from: true, maintenance: { price: 50, from: true } },
