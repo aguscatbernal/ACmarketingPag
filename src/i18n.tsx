@@ -7,7 +7,7 @@ export type Lang = "es" | "en";
 const dictionaries: Record<Lang, Content> = { es, en };
 const STORAGE_KEY = "ac-lang";
 
-function initialLang(): Lang {
+function detectLang(): Lang {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved === "es" || saved === "en") return saved;
@@ -28,7 +28,13 @@ type LangCtx = {
 const Ctx = createContext<LangCtx | null>(null);
 
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(initialLang);
+  // La web se pre-arma en español (ver prerender.mjs); al cargar se pasa al
+  // idioma guardado o al del navegador.
+  const [lang, setLangState] = useState<Lang>("es");
+
+  useEffect(() => {
+    setLangState(detectLang());
+  }, []);
   const t = dictionaries[lang];
 
   const setLang = useCallback((l: Lang) => {

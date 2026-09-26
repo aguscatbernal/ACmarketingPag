@@ -16,9 +16,10 @@ export const legalHref = (page: LegalPage) => `#legal/${page}`;
 
 export function LegalModal() {
   const { t } = useLang();
-  const [page, setPage] = useState<LegalPage | null>(pageFromHash);
+  const [page, setPage] = useState<LegalPage | null>(null);
 
   useEffect(() => {
+    setPage(pageFromHash());
     const onHash = () => setPage(pageFromHash());
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);

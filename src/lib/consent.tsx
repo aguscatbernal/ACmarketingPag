@@ -48,8 +48,14 @@ type ConsentCtx = {
 const Ctx = createContext<ConsentCtx | null>(null);
 
 export function ConsentProvider({ children }: { children: ReactNode }) {
-  const [consent, setConsent] = useState<Consent | null>(readConsent);
+  const [consent, setConsent] = useState<Consent | null>(null);
+  const [loadedFromStorage, setLoadedFromStorage] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+
+  useEffect(() => {
+    setConsent(readConsent());
+    setLoadedFromStorage(true);
+  }, []);
 
   useEffect(() => {
     if (consent) loadAccepted(consent);
@@ -75,13 +81,13 @@ export function ConsentProvider({ children }: { children: ReactNode }) {
   const value = useMemo(
     () => ({
       consent,
-      bannerVisible: usedCategories.length > 0 && !consent && !settingsOpen,
+      bannerVisible: loadedFromStorage && usedCategories.length > 0 && !consent && !settingsOpen,
       settingsOpen,
       openSettings: () => setSettingsOpen(true),
       closeSettings: () => setSettingsOpen(false),
       save,
     }),
-    [consent, settingsOpen, save]
+    [consent, loadedFromStorage, settingsOpen, save]
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

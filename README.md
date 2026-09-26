@@ -72,6 +72,11 @@ Se genera solo al compilar (`seo.ts`), a partir de los mismos datos de la web:
 - Datos de negocio local para Google (JSON-LD) con zona (Málaga, Costa del Sol, Madrid), redes y
   los packs con sus precios. No incluye teléfono ni email, para no exponerlos a los bots.
 
+**Web pre-armada**: `npm run build` genera también el HTML completo de la página con todos los textos
+(`src/entry-server.tsx` + `prerender.mjs`), así Google y los móviles ven el contenido de entrada. En el
+navegador React "engancha" ese HTML (`hydrateRoot`) para las animaciones y botones. Por eso lo que dependa
+del navegador (idioma guardado, tamaño de pantalla, localStorage…) se lee en un `useEffect`, no al dibujar.
+
 **Al publicar**: la dirección de la web se configura en `SITE_URL` (`seo.ts`), o con la variable de
 entorno `SITE_URL` en Cloudflare Pages. Ahora es `https://ac-marketing-malaga.pages.dev`.
 

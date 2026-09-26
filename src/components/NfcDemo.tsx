@@ -45,8 +45,20 @@ export function NfcDemo() {
 
   const near = phase !== "idle";
   // Distancias en "rem" para que acompañen el tamaño de letra en pantallas grandes
-  const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-  const idleX = (window.innerWidth < 640 ? 3.1 : 5.6) * rem;
+  // (se miden al cargar: en el HTML pre-armado se usan valores de escritorio)
+  const [layout, setLayout] = useState({ rem: 16, mobile: false });
+  useEffect(() => {
+    const measure = () =>
+      setLayout({
+        rem: parseFloat(getComputedStyle(document.documentElement).fontSize) || 16,
+        mobile: window.innerWidth < 640,
+      });
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+  const rem = layout.rem;
+  const idleX = (layout.mobile ? 3.1 : 5.6) * rem;
 
   return (
     <section className="section nfc-section" id="nfc">

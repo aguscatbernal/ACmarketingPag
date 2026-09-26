@@ -37,7 +37,7 @@ export function Footer() {
         </div>
       </div>
       <div className="container footer-bottom">
-        <span>
+        <span suppressHydrationWarning>
           © {new Date().getFullYear()} {brand.name} · {t.meta.city} · {t.footer.rights}
         </span>
         <nav className="footer-legal">

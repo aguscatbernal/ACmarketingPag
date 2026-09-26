@@ -16,7 +16,12 @@ type Order = {
 
 const columnIcons = [ClipboardList, ChefHat, BellRing];
 
-let nextId = 1;
+const initialOrders: Order[] = [
+  { id: 1, table: 4, items: ["croquetas", "cana"], total: 10.5, status: 1 },
+  { id: 2, table: 9, items: ["paella", "tinto", "tarta"], total: 23.9, status: 0 },
+];
+
+let nextId = initialOrders.length + 1;
 function newOrder(): Order {
   const n = 1 + Math.floor(Math.random() * 3);
   const picks = [...demoMenu].sort(() => Math.random() - 0.5).slice(0, n);
@@ -34,10 +39,9 @@ export function RestaurantSystem() {
   const sys = t.system;
   const boardRef = useRef<HTMLDivElement>(null);
   const inView = useInView(boardRef, { margin: "-100px" });
-  const [orders, setOrders] = useState<Order[]>(() => [
-    { ...newOrder(), status: 1 },
-    newOrder(),
-  ]);
+  // Pedidos iniciales fijos (iguales en el HTML pre-armado y en el navegador);
+  // los siguientes se generan al azar mientras la sección está a la vista.
+  const [orders, setOrders] = useState<Order[]>(initialOrders);
   const ordersRef = useRef(orders);
   const [sales, setSales] = useState(1845.5);
   const [served, setServed] = useState(23);
