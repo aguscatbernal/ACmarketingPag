@@ -11,7 +11,10 @@
 const decode = (s: string) => [...atob(s)].reverse().join("");
 
 export const brand = {
-  name: "AC Marketing",
+  name: "AceMedia Marketing",
+  // El nombre partido en dos para el logo de la barra y del pie
+  wordTop: "AceMedia",
+  wordBottom: "Marketing",
   short: "AC",
   whatsapp: () => decode("NTY3NzY1MzE2NDM="), // +34 613 56 77 65
   email: () => decode("bW9jLmxpYW1nQGF5Z25pdGVrcmFtYy5h"), // a.cmarketingya@gmail.com
@@ -175,7 +178,7 @@ export const techStack = ["React", "TypeScript", "Firebase", "Realtime", "Web + 
 // razón social), el NIF/NIE y la dirección fiscal: las líneas de NIF y domicilio
 // solo aparecen en el aviso legal y la privacidad cuando tienen un valor.
 export const legalOwner = {
-  name: "AC Marketing",
+  name: "AceMedia Marketing",
   nif: "",
   address: "",
   domain: "acmarketing.es", // EDITAR: dominio definitivo de la web

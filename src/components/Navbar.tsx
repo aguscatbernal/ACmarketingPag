@@ -40,8 +40,10 @@ export function Navbar() {
       <div className="container nav-inner">
         <a href="#top" className="logo" onClick={() => setOpen(false)}>
           <img className="logo-mark" src="/brand/logo-mark.png" alt="" width="60" height="44" />
-          <span className="logo-word" aria-hidden="true">Marketing</span>
-          <span className="sr-only">{brand.name}</span>
+          <span className="logo-name">
+            <strong>{brand.wordTop}</strong>
+            <span>{brand.wordBottom}</span>
+          </span>
         </a>
 
         <nav className="nav-links">

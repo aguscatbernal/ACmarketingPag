@@ -66,7 +66,7 @@ export const legalEs = {
         {
           h: "2. Objeto",
           p: [
-            "Esta web presenta los servicios de AC Marketing: tags NFC para reseñas y carta en mesa, colaboraciones con creadores de contenido, gestión de redes sociales y desarrollo de webs y aplicaciones. Navegar por ella atribuye la condición de usuario e implica aceptar este aviso legal.",
+            "Esta web presenta los servicios de AceMedia Marketing: tags NFC para reseñas y carta en mesa, colaboraciones con creadores de contenido, gestión de redes sociales y desarrollo de webs y aplicaciones. Navegar por ella atribuye la condición de usuario e implica aceptar este aviso legal.",
           ],
         },
         {

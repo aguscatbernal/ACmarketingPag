@@ -96,9 +96,14 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.05; letter-spacing
 .logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; }
 .logo-mark { height: 3rem; width: auto; transition: transform 0.4s; }
 .logo:hover .logo-mark { transform: rotate(-4deg) scale(1.06); }
-.logo-word { font-family: var(--font); font-weight: 400; font-size: 0.82rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--green-800); margin-left: -2px; }
+.logo-name { display: flex; flex-direction: column; line-height: 1.05; }
+.logo-name strong { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; color: var(--green-800); }
+.logo-name span { font-family: var(--font); font-weight: 400; font-size: 0.62rem; letter-spacing: 0.34em; text-transform: uppercase; color: var(--green-700); margin-top: 3px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.footer-logo img { height: 7.5rem; width: auto; }
+.footer-logo { display: inline-flex; align-items: center; gap: 12px; }
+.footer-logo img { height: 4.2rem; width: auto; }
+.footer-logo .logo-name strong { color: #fff; font-size: 1.5rem; }
+.footer-logo .logo-name span { color: var(--mint-300); font-size: 0.72rem; }
 .nav-links { display: flex; gap: 6px; margin-left: auto; }
 .nav-links a { white-space: nowrap;
   padding: 8px 14px; border-radius: 999px; font-weight: 500; color: var(--muted);

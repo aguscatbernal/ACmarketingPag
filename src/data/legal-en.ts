@@ -65,7 +65,7 @@ export const legalEn: LegalContent = {
         {
           h: "2. Purpose",
           p: [
-            "This website presents AC Marketing's services: NFC tags for reviews and table menus, creator collabs, social media management and web and app development. Browsing it makes you a user and implies acceptance of this legal notice.",
+            "This website presents AceMedia Marketing's services: NFC tags for reviews and table menus, creator collabs, social media management and web and app development. Browsing it makes you a user and implies acceptance of this legal notice.",
           ],
         },
         {

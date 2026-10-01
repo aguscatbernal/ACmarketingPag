@@ -1,4 +1,4 @@
-# AC Marketing — Web
+# AceMedia Marketing — Web
 
 Landing en React + TypeScript + Vite + framer-motion, en español (España) e inglés.
 
@@ -55,7 +55,7 @@ Formulario ──► Firestore (colección "consultas") ──► app reels_mana
 ## Legal (España)
 - Aviso legal, política de privacidad y política de cookies: `src/data/legal-es.ts` / `legal-en.ts`.
   Se abren en ventanas con enlaces tipo `#legal/privacidad`.
-- **Titular**: mientras no haya alta figura el nombre comercial "AC Marketing". Al darse de alta, poned
+- **Titular**: mientras no haya alta figura el nombre comercial "AceMedia Marketing". Al darse de alta, poned
   nombre y apellidos (o razón social), NIF/NIE y dirección en `legalOwner` (`src/data/site.ts`); las
   líneas de NIF y domicilio aparecen solas cuando tienen valor.
 - Son plantillas: conviene que un gestor o abogado las revise.

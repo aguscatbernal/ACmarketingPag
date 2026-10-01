@@ -13,7 +13,11 @@ export function Footer() {
       <div className="container footer-inner">
         <div className="footer-brand">
           <a href="#top" className="footer-logo">
-            <img src="/brand/logo-full-light.png" alt={brand.name} width="180" height="170" loading="lazy" />
+            <img src="/brand/logo-mark-light.png" alt="" width="109" height="80" loading="lazy" />
+            <span className="logo-name">
+              <strong>{brand.wordTop}</strong>
+              <span>{brand.wordBottom}</span>
+            </span>
           </a>
           <p>{t.meta.tagline}</p>
         </div>

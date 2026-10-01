@@ -7,7 +7,7 @@ import { legalEs } from "./legal-es.ts";
 
 export const es = {
   meta: {
-    title: "AC Marketing | Marketing para negocios en Málaga: NFC, colaboraciones y redes",
+    title: "AceMedia Marketing | Marketing para negocios en Málaga: NFC, colaboraciones y redes",
     description:
       "Tags NFC para reseñas de Google y carta en mesa, colaboraciones con creadora de contenido en Instagram y TikTok, gestión de redes sociales y webs y apps para restaurantes en Málaga, la Costa del Sol y Madrid.",
     tagline: "Marketing que se toca, se ve y se recomienda.",
