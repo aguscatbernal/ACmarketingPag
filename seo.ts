@@ -55,27 +55,6 @@ function localBusiness() {
   };
 }
 
-// Nombre del sitio que Google muestra encima del resultado (en vez de "pages.dev")
-function webSite() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${SITE_URL}/#web`,
-    name: brand.name,
-    alternateName: ["AC Marketing Málaga", "ACMarketing"],
-    url: `${SITE_URL}/`,
-    inLanguage: ["es", "en"],
-    publisher: { "@id": `${SITE_URL}/#negocio` },
-  };
-}
-
-const jsonLdTag = (data: object) => ({
-  tag: "script",
-  attrs: { type: "application/ld+json" },
-  children: JSON.stringify(data).replace(/</g, "\\u003c"),
-  injectTo: "head" as const,
-});
-
 export function seo(): Plugin {
   return {
     name: "ac-seo",
@@ -88,7 +67,14 @@ export function seo(): Plugin {
             .replaceAll("%TITLE%", escapeHtml(es.meta.title))
             .replaceAll("%DESCRIPTION%", escapeHtml(es.meta.description)),
           // Datos para Google: no se ejecutan, así que la CSP no los bloquea
-          tags: [jsonLdTag(webSite()), jsonLdTag(localBusiness())],
+          tags: [
+            {
+              tag: "script",
+              attrs: { type: "application/ld+json" },
+              children: JSON.stringify(localBusiness()).replace(/</g, "\\u003c"),
+              injectTo: "head",
+            },
+          ],
         };
       },
     },
