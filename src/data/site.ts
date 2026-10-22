@@ -142,10 +142,10 @@ export const offers: {
   },
   { id: "combo", emoji: "🚀", price: 180, separate: 200, highlight: true },
   { id: "colab", emoji: "🎬", price: 150 },
-  { id: "mesa", emoji: "🍽️", price: 90 },
-  { id: "redes", emoji: "📱", price: 350, monthly: true },
-  { id: "sistema", emoji: "👨‍🍳", price: 220, maintenance: { price: 50, minMonths: 3 } },
-  { id: "web", emoji: "💻", price: 390, from: true, maintenance: { price: 50, from: true } },
+  { id: "mesa", emoji: "🍽️", price: 160 },
+  { id: "redes", emoji: "📱", price: 400, from: true, monthly: true },
+  { id: "sistema", emoji: "👨‍🍳", price: 350, from: true, maintenance: { price: 50, minMonths: 3 } },
+  { id: "web", emoji: "💻", price: 400, from: true, maintenance: { price: 50, from: true } },
 ];
 
 // Banner de promoción con cuenta atrás. Activadlo solo con una promo real
